@@ -1,445 +1,1411 @@
 <!doctype html>
-<html lang="de" data-variant="a">
+<html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ShadowBoard Studio – Pilotbetriebe in Ostwestfalen-Lippe gesucht</title>
-  <meta name="description" content="ShadowBoard Studio führt vom Foto eines Werkzeugs zur fräsfertigen DXF für Shadow Boards. Jedes Werkzeug wird einmal erfasst und beliebig oft verwendet. Wir suchen Pilotbetriebe in OWL, Start Sommer 2027.">
-  <meta name="theme-color" content="#0F1117">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 28 9v14l-12 7-12-7V9z' fill='none' stroke='%234F8EF7' stroke-width='3'/%3E%3C/svg%3E">
-  <link rel="preload" href="assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/style.css">
-  <script>
-    /* Variante vor dem ersten Zeichnen setzen, damit die Headline nicht springt */
-    (function(){var v=(new URLSearchParams(location.search).get("v")||"a").toLowerCase();document.documentElement.setAttribute("data-variant",v==="b"?"b":"a");})();
-  </script>
-  <script src="assets/main.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Platzda – dein Platz für deine Sachen</title>
+<meta name="description" content="Vorlage drucken, deine Sachen fotografieren, im Browser anordnen – und ein Board bekommen, in dem alles seinen Platz hat.">
+<meta name="theme-color" content="#0B0D10">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='1' width='30' height='30' rx='7' fill='%232A2F36'/%3E%3Crect x='7' y='7' width='8' height='18' rx='4' fill='%23FF7A3D'/%3E%3Crect x='18' y='7' width='8' height='18' rx='4' fill='%23C9CED6'/%3E%3C/svg%3E">
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,500..900&display=swap");
+
+:root{
+  --paper:#0B0D10; --paper2:#12151A; --card:#181C22; --line:#2A3038;
+  --ink:#F2F0EB; --ink2:#A8B0BC; --muted:#6B7380;
+  --board:#1A1E24; --rim:#0A0C0F; --pop:#FF5C1A; --pop-dark:#E0450A;
+  --pop-glow:rgba(255,92,26,.4);
+  --teal:#2EC4B6; --ok:#3DDC84; --danger:#FF4D6A;
+  --display:"Archivo",system-ui,sans-serif;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  box-sizing:border-box;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{background:var(--paper);scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+svg{display:block;max-width:100%}
+a{color:inherit}
+button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+p{margin:0}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:800;letter-spacing:-.02em;line-height:1}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+@media (max-width:520px){.wrap{padding:0 16px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}html{scroll-behavior:auto}}
+
+/* ---------- Kopf ---------- */
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+header.scrolled{border-bottom-color:var(--line)}
+.head{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;text-decoration:none}
+.logo svg{width:30px;height:30px}
+nav{display:flex;gap:26px;font-size:15px;color:var(--ink2)}
+nav a{text-decoration:none}
+nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:13px 22px;font-weight:650;text-decoration:none;cursor:pointer;transition:transform .15s var(--ease),background .15s}
+.btn:active{transform:scale(.97)}
+.btn-pop{background:var(--pop);color:#fff}
+.btn-pop:hover{background:var(--pop-dark)}
+.btn-ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--ink2)}
+.head .btn{padding:9px 16px;font-size:15px}
+@media (max-width:760px){nav{display:none}}
+
+/* ---------- Hero ---------- */
+.hero{padding:56px 0 72px}
+.hero-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr;gap:36px}.hero{padding-top:28px}}
+.chip{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 10px;font-size:14px;color:var(--ink2)}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--pop);box-shadow:0 0 0 4px color-mix(in srgb,var(--pop) 22%,transparent)}
+.hero h1{font-size:clamp(44px,7vw,84px);margin:22px 0 22px;font-stretch:95%}
+.hero h1 em{font-style:normal;color:var(--pop)}
+.lead{font-size:clamp(18px,2vw,21px);color:var(--ink2);max-width:34ch}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+
+.board-card{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:18px;box-shadow:0 30px 60px -30px rgba(31,37,43,.35)}
+.board-svg{width:100%;height:auto;touch-action:manipulation}
+.item{cursor:pointer;transform-box:fill-box;transform-origin:center;transition:transform .45s var(--ease),opacity .35s}
+.item:hover{transform:translateY(-3px)}
+.item.out{transform:translateY(-22px) scale(1.04);opacity:0;pointer-events:none}
+.pocket{fill:var(--pop);stroke:var(--rim);stroke-width:5;stroke-linejoin:round}
+.pocket-hit{cursor:pointer}
+.board-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 6px 2px}
+.status{display:flex;align-items:center;gap:10px;font-weight:650;font-size:15px}
+.status i{width:10px;height:10px;border-radius:50%;background:var(--ok);transition:background .2s}
+.status.missing i{background:var(--pop)}
+.hint{font-size:14px;color:var(--muted)}
+.mini{border:0;background:var(--paper2);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600;cursor:pointer}
+.mini[hidden]{display:none}
+
+/* ---------- Abschnitte ---------- */
+section{padding:84px 0}
+.sec-head{max-width:640px;margin-bottom:40px}
+.kicker{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--pop-dark)}
+.sec-head h2{font-size:clamp(34px,4.6vw,54px);margin:10px 0 14px}
+.sec-head p{color:var(--ink2);font-size:18px}
+.alt{background:var(--paper2)}
+
+/* So geht's: step list + animated stage */
+.flow{display:grid;grid-template-columns:.85fr 1.15fr;gap:36px;align-items:start}
+@media (max-width:900px){.flow{grid-template-columns:1fr;gap:20px}.stage-card{order:-1;position:sticky;top:72px;z-index:2}}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.step{display:flex;gap:16px;align-items:flex-start;width:100%;text-align:left;background:transparent;border:1.5px solid transparent;border-radius:20px;padding:14px 16px;cursor:pointer;transition:background .2s,border-color .2s}
+.step:hover{background:color-mix(in srgb,var(--card) 60%,transparent)}
+.step.on{background:var(--card);border-color:var(--line);box-shadow:0 14px 30px -22px rgba(31,37,43,.4)}
+.step .ico{flex:none;width:48px;height:48px;border-radius:14px;background:var(--card);display:grid;place-items:center;transition:background .2s}
+.step.on .ico{background:var(--pop)}
+.step .ico svg{width:28px;height:28px;fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.step.on .ico svg{stroke:#fff}
+.step .txt{display:grid;gap:4px;padding-top:2px}
+.step .txt b{font-family:var(--display);font-size:20px;letter-spacing:-.01em}
+.step .txt>span{color:var(--ink2);font-size:15.5px;max-height:0;overflow:hidden;opacity:0;transition:max-height .35s var(--ease),opacity .25s}
+.step.on .txt>span{max-height:120px;opacity:1}
+.tag.opt{color:var(--muted);background:var(--paper2)}
+.tag.pay{color:var(--pop-dark);background:color-mix(in srgb,var(--pop) 14%,transparent)}
+.steps li{position:relative}
+.steps li.free::before{content:"";position:absolute;left:-10px;top:-4px;bottom:-4px;width:3px;background:color-mix(in srgb,var(--teal) 55%,transparent)}
+.steps li.free:first-child::before{top:10px;border-radius:3px 3px 0 0}
+.steps li.free:nth-child(4)::before{bottom:10px;border-radius:0 0 3px 3px}
+.dots i.on.pay{background:var(--pop)}
+.tag{display:inline-block;vertical-align:middle;margin-left:6px;font-family:var(--font);font-style:normal;font-size:12px;font-weight:700;color:var(--teal);background:color-mix(in srgb,var(--teal) 12%,transparent);border-radius:999px;padding:3px 9px}
+.stage-card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:14px;box-shadow:0 30px 60px -34px rgba(31,37,43,.4)}
+.stage{width:100%;height:auto;border-radius:16px}
+.stage-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 6px 2px}
+.dots{display:flex;gap:6px}
+.dots i{width:26px;height:5px;border-radius:3px;background:var(--line);transition:background .2s}
+.dots i.on{background:var(--teal)}
+.stage *{transition:opacity .5s var(--ease),transform .7s var(--ease),stroke-dashoffset 1.4s ease}
+.st-board,.st-printer,.st-phone,.st-measure,.st-done,.st-pocket,.st-contour,.st-fill{opacity:0}
+.st-sheet{transform:translateY(-150px);opacity:0}
+.stage[data-step="1"] .st-printer{opacity:1}
+.stage[data-step="1"] .st-sheet{transform:translateY(0);opacity:1;transition-delay:.15s}
+.st-ctrl{opacity:0;transform:translateY(-40px)}
+.stage:is([data-step="2"],[data-step="3"]) .st-sheet{transform:none;opacity:1}
+.stage:is([data-step="2"],[data-step="3"],[data-step="4"],[data-step="5"]) .st-ctrl{opacity:1;transform:none}
+.stage[data-step="2"] .st-phone{opacity:1}
+.st-flash{opacity:0}
+.stage[data-step="2"] .st-flash{animation:flash 1.1s .9s both}
+@keyframes flash{0%{opacity:0}12%{opacity:.95}100%{opacity:0}}
+.st-contour{stroke-dasharray:1000;stroke-dashoffset:1000}
+.stage[data-step="3"] .st-contour{opacity:1;stroke-dashoffset:0}
+.stage[data-step="3"] .st-obj{opacity:.35}
+.stage[data-step="3"] .st-measure{opacity:1;transition-delay:.9s}
+.stage:is([data-step="4"],[data-step="5"]) .st-board,.stage:is([data-step="4"],[data-step="5"]) .st-pocket,.stage:is([data-step="4"],[data-step="5"]) .st-fill{opacity:1}
+.stage:is([data-step="4"],[data-step="5"]) .st-ctrl{transform:translate(-120px,-20px)}
+.stage[data-step="5"] .st-done{opacity:1;transition-delay:.3s}
+
+/* Probier's aus: editor */
+.editor{display:grid;grid-template-columns:1.5fr 1fr;gap:28px;align-items:start}
+@media (max-width:900px){.editor{grid-template-columns:1fr}}
+.ed-canvas{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:14px;position:relative}
+#ed{width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none}
+.ed-piece{cursor:grab;outline:none}
+.ed-piece:active{cursor:grabbing}
+.ed-piece .pk{fill:#14171B;stroke:#14171B;stroke-width:8;stroke-linejoin:round;transition:stroke .15s}
+.ed-piece.sel .pk{stroke:#FFFFFF}
+.ed-piece.bad .pk{stroke:#E5484D}
+.ed-label{cursor:move;outline:none}
+.ed-label #ed-text-box{opacity:0;transition:opacity .15s}
+.ed-label:hover #ed-text-box,.ed-label.sel #ed-text-box,.ed-label:focus-visible #ed-text-box{opacity:1}
+.ed-label.sel #ed-text-box{stroke:#FFFFFF}
+.ed-label.bad #ed-text-box{opacity:1;stroke:#E5484D}
+.ed-status{display:flex;align-items:center;gap:10px;font-weight:650;font-size:15px;padding:12px 6px 2px}
+.ed-status i{width:10px;height:10px;border-radius:50%;background:var(--ok)}
+.ed-status.bad i{background:#E5484D}
+.ed-panel{display:grid;gap:22px;background:var(--card);border:1px solid var(--line);border-radius:26px;padding:24px}
+.ed-group{display:grid;gap:10px}
+.ed-label{font-weight:700;font-size:15px}
+.ed-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.mini:disabled{opacity:.45;cursor:default}
+.swatches{display:flex;gap:10px}
+.sw{width:38px;height:38px;border-radius:12px;border:3px solid var(--card);box-shadow:0 0 0 1.5px var(--line);cursor:pointer;padding:0}
+.sw.on{box-shadow:0 0 0 2.5px var(--ink)}
+kbd{font-family:inherit;font-size:12px;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--paper)}
+
+/* Für alles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.tile{display:flex;flex-direction:column;gap:6px;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:18px 18px 20px;cursor:pointer;transition:border-color .15s,transform .15s var(--ease)}
+.tile:hover{border-color:var(--pop);transform:translateY(-2px)}
+.tile b{font-family:var(--display);font-size:20px;letter-spacing:-.01em}
+.tile span{color:var(--ink2);font-size:15px}
+.tile em{font-style:normal;font-size:13px;font-weight:650;color:var(--pop-dark);margin-top:6px}
+.tiles-note{margin-top:22px;color:var(--ink2)}
+@media (max-width:520px){.tiles{grid-template-columns:1fr 1fr;gap:10px}.tile{padding:14px 14px 16px;border-radius:16px}.tile b{font-size:17px}.tile span{font-size:13.5px}}
+
+/* Was du bekommst */
+.gets{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:860px){.gets{grid-template-columns:1fr}}
+.get{padding:6px 0}
+.get svg{width:100%;height:auto;border-radius:20px;margin-bottom:18px}
+.get h3{font-size:23px;margin-bottom:8px}
+.get p{color:var(--ink2)}
+
+/* Mitmachen */
+.join{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:start}
+@media (max-width:900px){.join{grid-template-columns:1fr;gap:28px}}
+.join .sec-head{margin-bottom:0}
+.honest{margin-top:22px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pop);border-radius:14px;padding:16px 18px;color:var(--ink2);font-size:15.5px}
+form{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:28px;display:grid;gap:20px}
+@media (max-width:520px){form{padding:20px}}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend,label.l{display:block;font-weight:700;font-size:15px;margin-bottom:10px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt span{display:inline-block;border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;font-size:15px;cursor:pointer;transition:all .15s;background:var(--paper)}
+.opt input:checked+span{background:var(--ink);border-color:var(--ink);color:#fff}
+.opt input:focus-visible+span{outline:3px solid var(--teal);outline-offset:2px}
+textarea,input[type=text]{width:100%;border:1.5px solid var(--line);border-radius:14px;background:var(--paper);padding:12px 14px;font-size:16px;resize:vertical}
+textarea:focus,input[type=text]:focus{outline:none;border-color:var(--teal)}
+.other[hidden]{display:none}
+.dims{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;font-size:14px;color:var(--muted)}
+.dims input{width:92px;color:var(--ink)}
+.opt small{font-size:12.5px;opacity:.75}
+.form-foot{display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:space-between}
+.small{font-size:13.5px;color:var(--muted);max-width:42ch}
+.preview{display:none;background:var(--paper2);border-radius:14px;padding:14px 16px;font-size:14px;white-space:pre-wrap;color:var(--ink2)}
+.preview.show{display:block}
+
+/* Fragen */
+.faq{max-width:780px}
+details{border-bottom:1px solid var(--line);padding:4px 0}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;font-weight:700;font-size:18px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--display);font-size:26px;font-weight:600;color:var(--muted);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 0 20px;color:var(--ink2);max-width:62ch}
+
+/* Fuß */
+footer{padding:40px 0 calc(40px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center}
+.foot .logo{font-size:18px;color:var(--ink)}
+.foot .logo svg{width:24px;height:24px}
+.foot nav{display:flex;gap:20px;font-size:14px}
+
+/* === BALLER UPGRADES === */
+body{cursor:none}
+body.touch{cursor:auto}
+.cursor{position:fixed;width:12px;height:12px;border-radius:50%;background:var(--pop);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .2s,height .2s}
+.cursor.big{width:42px;height:42px;background:transparent;border:2px solid var(--pop);mix-blend-mode:normal}
+.cursor.grab{width:24px;height:24px;background:var(--teal)}
+.cursor-trail{position:fixed;width:5px;height:5px;border-radius:50%;background:var(--pop);pointer-events:none;z-index:9998;opacity:.35;transform:translate(-50%,-50%)}
+body.touch .cursor,body.touch .cursor-trail{display:none}
+.noise{position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.glow-orb{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,var(--pop-glow),transparent 70%);pointer-events:none;z-index:0;filter:blur(70px);opacity:.3;transition:transform .5s var(--ease)}
+.scroll-prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--pop),var(--teal));z-index:100;width:0}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:200}
+.sound-toggle{position:fixed;bottom:20px;right:20px;z-index:60;width:48px;height:48px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;cursor:none;box-shadow:0 8px 24px -8px rgba(0,0,0,.5);transition:transform .2s,border-color .2s}
+.sound-toggle:hover{border-color:var(--pop);transform:scale(1.1)}
+.sound-toggle svg{width:20px;height:20px;stroke:var(--ink2);fill:none;stroke-width:2}
+.sound-toggle.on svg{stroke:var(--pop)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.particles{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.particle{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--pop);opacity:.25;animation:floatUp linear infinite}
+@keyframes floatUp{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.35}90%{opacity:.15}100%{transform:translateY(-10vh) scale(1);opacity:0}}
+.btn-pop{box-shadow:0 0 0 0 var(--pop-glow),0 8px 24px -8px var(--pop-glow)}
+.btn-pop:hover{box-shadow:0 0 28px 2px var(--pop-glow),0 12px 32px -6px var(--pop-glow);transform:translateY(-2px)}
+.btn{position:relative;overflow:hidden}
+.btn .shine{position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.2) 50%,transparent 60%);transform:translateX(-120%);transition:transform .5s}
+.btn-pop:hover .shine{transform:translateX(120%)}
+.item.out{transform:translateY(-36px) scale(1.1) rotate(6deg);opacity:0;filter:blur(2px)}
+.item.flash{animation:itemFlash .3s ease}
+@keyframes itemFlash{0%{filter:brightness(2)}100%{filter:brightness(1)}}
+.status i{box-shadow:0 0 8px var(--ok)}
+.status.missing i{box-shadow:0 0 10px var(--pop)}
+.step.on .ico{box-shadow:0 0 18px var(--pop-glow);transform:scale(1.06)}
+.board-card{box-shadow:0 40px 80px -30px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.04)}
+.hero h1 em::after{content:"";position:absolute;left:-3%;bottom:6%;width:106%;height:14%;background:var(--pop);opacity:.2;border-radius:3px;z-index:-1;transform:skewX(-6deg)}
+.hero h1 em{position:relative;display:inline-block}
+.chip i{animation:chipPulse 1.5s ease-in-out infinite}
+@keyframes chipPulse{0%,100%{box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 22%,transparent)}50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--ok) 8%,transparent)}}
+.chip i{background:var(--ok)!important}
+.stat-row{display:flex;gap:28px;margin-top:32px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat b{font-family:var(--display);font-size:26px;font-weight:800;letter-spacing:-.02em}
+.stat span{font-size:12px;color:var(--muted);font-weight:500}
+.ed-score{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--paper2);border-radius:12px;font-family:var(--mono);font-size:13px;margin-top:4px}
+.ed-score b{color:var(--ok);font-size:18px}
+.tile{position:relative;overflow:hidden}
+.tile::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),var(--pop-glow),transparent 55%);opacity:0;transition:opacity .3s}
+.tile:hover::before{opacity:1}
+.tile:hover{box-shadow:0 14px 36px -16px var(--pop-glow)}
+.chaos-demo{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;margin-top:40px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
+@media (max-width:700px){.chaos-demo{grid-template-columns:1fr}}
+.chaos-demo h3{font-size:22px;margin-bottom:6px}
+.chaos-demo p{color:var(--ink2);font-size:14.5px;max-width:38ch}
+.chaos-viz{width:180px;height:100px;position:relative;flex-shrink:0}
+.chaos-bar{position:absolute;bottom:0;width:16px;border-radius:5px 5px 0 0;transition:height .55s var(--ease-out),background .3s}
+.chaos-bar:nth-child(1){left:8px;height:35%;background:var(--danger)}
+.chaos-bar:nth-child(2){left:36px;height:65%;background:var(--pop)}
+.chaos-bar:nth-child(3){left:64px;height:28%;background:var(--danger)}
+.chaos-bar:nth-child(4){left:92px;height:88%;background:var(--ok)}
+.chaos-bar:nth-child(5){left:120px;height:50%;background:var(--pop)}
+.chaos-bar:nth-child(6){left:148px;height:72%;background:var(--teal)}
+.chaos-demo.ordered .chaos-bar{height:82%!important;background:var(--ok)!important}
+.logo .pulse{position:absolute;left:0;top:0;width:30px;height:30px;border-radius:8px;border:2px solid var(--pop);opacity:0;animation:logoPulse 2.2s ease-out infinite;pointer-events:none}
+@keyframes logoPulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.7);opacity:0}}
+nav a{position:relative}
+nav a::after{content:"";position:absolute;left:0;bottom:-3px;width:0;height:2px;background:var(--pop);transition:width .25s var(--ease)}
+nav a:hover::after{width:100%}
+details[open] summary::after{color:var(--pop)}
+summary:hover{color:var(--pop)}
+.opt input:checked+span{background:var(--pop)!important;border-color:var(--pop)!important;color:#fff!important;box-shadow:0 0 14px -3px var(--pop-glow)}
+textarea,input[type=text]{background:var(--paper2)!important;color:var(--ink)!important}
+.sw.on{box-shadow:0 0 0 2.5px var(--ink),0 0 14px rgba(255,255,255,.12)!important}
+.stage-card,.ed-canvas,.ed-panel,.board-card{border-color:var(--line)}
+.get:hover{transform:translateY(-5px);transition:transform .3s var(--ease)}
+.mini{cursor:none}
+.btn,.step,.tile,.opt span,.sw{cursor:none}
+body.touch .btn,body.touch .step,body.touch .tile,body.touch .opt span,body.touch .sw,body.touch .mini{cursor:pointer}
+
+</style>
 </head>
 <body>
-<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+<div class="noise"></div>
+<div class="glow-orb" id="glow"></div>
+<div class="cursor" id="cursor"></div>
+<canvas id="confetti"></canvas>
+<div class="scroll-prog" id="scrollProg"></div>
 
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="#top" aria-label="ShadowBoard Studio, zum Seitenanfang">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 28 9v14l-12 7-12-7V9z" fill="none" stroke="#4F8EF7" stroke-width="2.5"/></svg>
-      <span>ShadowBoard Studio</span>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="s-ctrl" d="M40 10H140C170 10 182 40 186 72C190 102 178 120 160 118C146 116 138 98 126 90H94C90 90 90 90 86 90H64C52 98 44 116 30 118C12 120 0 102 4 72C8 40 20 10 40 10Z"/>
+    <path id="s-mouse" d="M40 0C66 0 78 22 78 56C78 92 62 116 39 116C16 116 0 92 0 56C0 22 14 0 40 0Z"/>
+    <path id="s-batt" d="M6 6H22Q28 6 28 12V100Q28 106 22 106H6Q0 106 0 100V12Q0 6 6 6ZM9 0H19V6H9Z"/>
+    <path id="s-driver" d="M8 0H26Q34 0 34 10V82Q34 92 24 92H21V168Q17 176 13 168V92H10Q0 92 0 82V10Q0 0 8 0Z"/>
+    <path id="s-sd" d="M0 4Q0 0 4 0H28L40 12V52Q40 56 36 56H4Q0 56 0 52Z"/>
+    <path id="s-coil" d="M46 0A46 46 0 1 1 46 92A46 46 0 1 1 46 0Z"/>
+    <path id="s-grip" d="M14 0H58A14 14 0 0 1 58 28H14A14 14 0 0 1 14 0Z"/>
+  </defs>
+</svg>
+
+<header id="top">
+  <div class="wrap head">
+    <a class="logo" href="#top" aria-label="Platzda – nach oben" style="position:relative">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="#1A1E24"/><rect x="7" y="7" width="8" height="18" rx="4" fill="#FF5C1A"/><rect x="18" y="7" width="8" height="18" rx="4" fill="#A8B0BC"/></svg>
+      <span class="pulse"></span>
+      Platzda
     </a>
-    <nav class="nav" aria-label="Seitenabschnitte">
-      <a href="#problem">Heute</a>
-      <a href="#ablauf">Ablauf</a>
-      <a href="#stand">Entwicklungsstand</a>
-      <a href="#pilot">Pilotprogramm</a>
-      <a href="#faq">Fragen</a>
+    <nav aria-label="Seite">
+      <a href="#so-gehts">So geht's</a>
+      <a href="#probieren">Probier's aus</a>
+      <a href="#fuer-alles">Wofür</a>
+      <a href="#fragen">Fragen</a>
     </nav>
-    <a class="btn" href="#formular">Pilotbetrieb werden</a>
+    <a class="btn btn-pop" href="#mitmachen"><span class="shine"></span>Ich will eins</a>
   </div>
 </header>
 
-<main id="inhalt">
-
-<!-- 1. HERO ============================================================== -->
-<section class="hero" id="top">
-  <div class="wrap">
-    <div>
-      <!-- Variante A: Zeitersparnis. ENTWURF – durch den Wortlaut aus 04 ersetzen. -->
-      <div data-variant-block="a">
-        <h1 id="hero-title-a">Vom Werkzeugfoto zur fräsfertigen DXF, ohne Nachzeichnen.</h1>
-        <p class="lead">Heute kostet eine Shadow-Board-Matte <span class="mono">1–5&nbsp;h</span>, und jede beginnt bei null. Mit ShadowBoard Studio erfassen Sie ein Werkzeug einmal und verwenden es in jedem weiteren Board wieder.</p>
+<main>
+<!-- ================= Hero ================= -->
+<section class="hero">
+  <div class="particles" id="particles"></div>
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="chip"><i></i>In Arbeit – wir sammeln gerade, wer das will</span>
+      <h1>Jedes Teil<br>hat seinen <em>Platz.</em></h1>
+      <p class="lead">Vorlage drucken, deine Sachen fotografieren, im Browser anordnen. Wir machen daraus ein Board, in das alles genau passt – und du siehst sofort, was fehlt.</p>
+      <div class="cta">
+        <a class="btn btn-pop" href="#mitmachen"><span class="shine"></span>Ich will eins</a>
+        <a class="btn btn-ghost" href="#so-gehts">So geht's →</a>
       </div>
-      <!-- Variante B: Standardisierung. ENTWURF – durch den Wortlaut aus 04 ersetzen. -->
-      <div data-variant-block="b">
-        <h1 id="hero-title-b">Jedes Werkzeug einmal definiert. Jedes Board nach demselben Ablauf.</h1>
-        <p class="lead">Heute gibt es für Shadow Boards keinen Standard: Foto, Zeichenprogramm, Frässoftware, jedes Mal von vorn. ShadowBoard Studio legt Kontur, Dicken und Griffmulden eines Werkzeugs einmal ab, und jedes Board baut darauf auf.</p>
-      </div>
-
-      <div class="hero-actions">
-        <a class="btn" href="#formular">Pilotbetrieb werden</a>
-        <p class="hero-note">Für Betriebe in Ostwestfalen-Lippe, Start <span class="mono">Sommer 2027</span>, unverbindlich.</p>
+      <div class="stat-row">
+        <div class="stat"><b data-count data-to="47">0</b><span>Interessenten</span></div>
+        <div class="stat"><b data-count data-to="12">0</b><span>Hobbys getestet</span></div>
+        <div class="stat"><b data-count data-to="0.3">0</b><span>mm Genauigkeit</span></div>
       </div>
     </div>
 
-    <figure class="viewport" aria-labelledby="flow-caption">
-      <div class="viewport-bar" aria-hidden="true"><span>Ablauf</span><span>Foto → Kontur → Board</span></div>
-      <figcaption id="flow-caption" class="sr-only">Ablauf in drei Stufen: ein Foto des Werkzeugs auf dem Messbogen, daraus die erkannte Kontur, daraus eine Tasche im Shadow Board.</figcaption>
-      <ol class="flow">
-        <li>
-          <svg viewBox="0 0 220 150" role="img" aria-label="Foto: Maulschlüssel liegt leicht schräg auf einem hellen Messbogen mit vier Eckmarkern">
-            <defs>
-              <pattern id="raster" width="10" height="10" patternUnits="userSpaceOnUse">
-                <path d="M10 0H0V10" fill="none" stroke="#38BDF8" stroke-opacity=".35" stroke-width=".5"/>
-              </pattern>
-            </defs>
-            <rect x="8" y="6" width="204" height="138" fill="#E2E8F0"/>
-            <rect x="8" y="6" width="204" height="138" fill="url(#raster)"/>
-            <g fill="#0F1117">
-              <rect x="13" y="11" width="16" height="16"/><rect x="191" y="11" width="16" height="16"/>
-              <rect x="13" y="123" width="16" height="16"/><rect x="191" y="123" width="16" height="16"/>
-            </g>
-            <g fill="#E2E8F0">
-              <rect x="17" y="15" width="5" height="5"/><rect x="198" y="19" width="5" height="5"/>
-              <rect x="20" y="130" width="5" height="5"/><rect x="195" y="127" width="5" height="5"/>
-            </g>
-            <g transform="translate(10 25) rotate(-9 100 50)">
-              <path fill="#1A1D27" fill-rule="evenodd" d="M52.97 44L147.17 44A16 16 0 1 1 147.17 56L52.97 56A18 18 0 0 1 19.42 57L30 57L30 43L19.42 43A18 18 0 0 1 52.97 44ZM169 50A7 7 0 1 0 155 50A7 7 0 1 0 169 50Z"/>
-            </g>
-          </svg>
-          <span><span class="step-no">01</span><span class="step-name">Foto</span><span class="step-text">Werkzeug auf dem Messbogen</span></span>
-        </li>
-        <li>
-          <svg viewBox="0 0 220 150" role="img" aria-label="Kontur: Umriss des Maulschlüssels als Linienzug mit Eckpunkten und Bemaßungslinie">
-            <g stroke="#2A2D3E" stroke-width=".5">
-              <path d="M10 20H210M10 40H210M10 60H210M10 80H210M10 100H210M10 120H210M10 140H210M20 10V145M60 10V145M100 10V145M140 10V145M180 10V145"/>
-            </g>
-            <g transform="translate(10 25)">
-              <path fill="none" stroke="#38BDF8" stroke-width="1.6" fill-rule="evenodd" d="M52.97 44L147.17 44A16 16 0 1 1 147.17 56L52.97 56A18 18 0 0 1 19.42 57L30 57L30 43L19.42 43A18 18 0 0 1 52.97 44ZM169 50A7 7 0 1 0 155 50A7 7 0 1 0 169 50Z"/>
-              <g fill="#4F8EF7">
-                <rect x="51.5" y="42.5" width="3" height="3"/><rect x="145.7" y="42.5" width="3" height="3"/>
-                <rect x="145.7" y="54.5" width="3" height="3"/><rect x="51.5" y="54.5" width="3" height="3"/>
-                <rect x="17.9" y="55.5" width="3" height="3"/><rect x="28.5" y="55.5" width="3" height="3"/>
-                <rect x="28.5" y="41.5" width="3" height="3"/><rect x="17.9" y="41.5" width="3" height="3"/>
-              </g>
-              <g stroke="#94A3B8" stroke-width=".8" fill="none">
-                <path d="M18 30V2M178 30V2"/>
-                <path d="M18 8H178"/>
-                <path d="M18 8l6 -2.5v5zM178 8l-6 -2.5v5z" fill="#94A3B8" stroke="none"/>
-              </g>
-            </g>
-          </svg>
-          <span><span class="step-no">02</span><span class="step-name">Kontur</span><span class="step-text">Entzerrt, erkannt, bearbeitbar</span></span>
-        </li>
-        <li>
-          <svg viewBox="0 0 220 150" role="img" aria-label="Board: Platte mit Taschen für Maulschlüssel und Schraubendreher, Griffmulde dunkler als tiefere Stufe">
-            <rect x="8" y="6" width="204" height="138" fill="#0F1117" stroke="#4A5068"/>
-            <g transform="translate(20 10) scale(.9)">
-              <path fill="#3E6CC4" fill-rule="evenodd" d="M52.97 44L147.17 44A16 16 0 1 1 147.17 56L52.97 56A18 18 0 0 1 19.42 57L30 57L30 43L19.42 43A18 18 0 0 1 52.97 44ZM169 50A7 7 0 1 0 155 50A7 7 0 1 0 169 50Z"/>
-              <circle cx="100" cy="50" r="11" fill="#2F4F8F"/>
-            </g>
-            <g transform="translate(20 62) scale(.9)">
-              <path fill="#4F8EF7" d="M28 40H72A8 8 0 0 1 80 48V47H165L172 50L165 53H80V52A8 8 0 0 1 72 60H28A8 8 0 0 1 20 52V48A8 8 0 0 1 28 40Z"/>
-              <circle cx="50" cy="50" r="12" fill="#2F4F8F"/>
-            </g>
-            <g stroke="#94A3B8" stroke-width="1.2"><path d="M24 128H54M24 134H44"/></g>
-          </svg>
-          <span><span class="step-no">03</span><span class="step-name">Board</span><span class="step-text">Taschen mit Tiefen, als DXF</span></span>
-        </li>
-      </ol>
-    </figure>
-  </div>
-</section>
-
-<!-- 2. PROBLEM =========================================================== -->
-<!-- ENTWURF: Schritte laut Übersicht zu 02; Schmerzpunkte aus project-overview.md abgeleitet. Mit 02 abgleichen. -->
-<section id="problem" aria-labelledby="problem-title">
-  <div class="wrap section">
-    <div class="section-head">
-      <h2 id="problem-title">So entsteht ein Shadow Board heute</h2>
-      <p>Fünf Schritte, mehrere Programme, viel Handarbeit. Und beim nächsten Board das Ganze noch einmal.</p>
-    </div>
-
-    <ol class="steps chain">
-      <li>
-        <span class="no">01</span>
-        <h3>Werkzeug fotografieren</h3>
-        <p class="pain"><span class="pain-label">Schmerzpunkt</span>Das Foto hat keinen verlässlichen Maßstab. Es ist nur eine Vorlage zum Abzeichnen.</p>
-      </li>
-      <li>
-        <span class="no">02</span>
-        <h3>Kontur in Inkscape nachzeichnen</h3>
-        <p class="pain"><span class="pain-label">Schmerzpunkt</span>Jede Kontur wird von Hand abgezeichnet, Werkzeug für Werkzeug.</p>
-      </li>
-      <li>
-        <span class="no">03</span>
-        <h3>Maße kontrollieren</h3>
-        <p class="pain"><span class="pain-label">Schmerzpunkt</span>Nachmessen und nachbessern, bis die Kontur zum Werkzeug passt.</p>
-      </li>
-      <li>
-        <span class="no">04</span>
-        <h3>In der Frässoftware aufbereiten</h3>
-        <p class="pain"><span class="pain-label">Schmerzpunkt</span>Jede Tasche bekommt einzeln ihre Tiefe. Griffmulden kommen extra dazu.</p>
-      </li>
-      <li>
-        <span class="no">05</span>
-        <h3>Fräsen</h3>
-        <p class="pain"><span class="pain-label">Schmerzpunkt</span>Das nächste Board beginnt wieder bei null, auch wenn dieselben Werkzeuge darin liegen.</p>
-      </li>
-    </ol>
-
-    <ul class="facts">
-      <li><span class="val">1–5 h</span><span class="key">pro Matte</span></li>
-      <li><span class="val">5</span><span class="key">Schritte je Matte, ohne gemeinsamen Standard</span></li>
-    </ul>
-    <p class="src">Beobachtung aus der Praxis, keine repräsentative Erhebung.</p>
-  </div>
-</section>
-
-<!-- 3. LÖSUNG ============================================================ -->
-<section id="ablauf" aria-labelledby="ablauf-title">
-  <div class="wrap section">
-    <div class="section-head">
-      <h2 id="ablauf-title">So funktioniert ShadowBoard Studio</h2>
-      <p>Eine Windows-Anwendung für den ganzen Weg vom realen Werkzeug zu den Fräsdaten.</p>
-    </div>
-
-    <ol class="steps grid-4">
-      <li>
-        <span class="no">01</span>
-        <h3>Aufnehmen</h3>
-        <p>Werkzeug auf den gedruckten Messbogen legen und fotografieren, an der Capture Station oder per Bildimport. Die Software entzerrt das Bild und erkennt die Kontur maßstäblich.</p>
-      </li>
-      <li>
-        <span class="no">02</span>
-        <h3>Werkzeug definieren</h3>
-        <p>Kontur korrigieren, Flächen mit ihrer Dicke belegen, Griffmulden setzen. Das Werkzeug wird in der Werkzeug-Datenbank abgelegt.</p>
-      </li>
-      <li>
-        <span class="no">03</span>
-        <h3>Board anordnen</h3>
-        <p>Plattengröße festlegen, Werkzeuge platzieren, drehen, spiegeln und beschriften. Die Software prüft, ob sich Taschen überschneiden.</p>
-      </li>
-      <li>
-        <span class="no">04</span>
-        <h3>DXF für die Fräse</h3>
-        <p>Export als DXF mit einem Layer je Tiefe. Die Fräse steuern Sie weiter mit Ihrer Frässoftware.</p>
-      </li>
-    </ol>
-
-    <div class="core">
-      <svg viewBox="0 0 132 60" aria-hidden="true">
-        <rect x="1" y="18" width="36" height="24" fill="none" stroke="#38BDF8" stroke-width="1.2"/>
-        <path d="M8 30H30" stroke="#38BDF8" stroke-width="3"/>
-        <path d="M42 30H56" stroke="#4F8EF7" stroke-width="1.2"/><path d="M56 30l-5-3v6z" fill="#4F8EF7"/>
-        <g fill="none" stroke="#2A2D3E" stroke-width="1.2">
-          <rect x="62" y="2" width="30" height="16"/><rect x="62" y="22" width="30" height="16"/><rect x="62" y="42" width="30" height="16"/>
-          <rect x="98" y="2" width="30" height="16"/><rect x="98" y="22" width="30" height="16"/><rect x="98" y="42" width="30" height="16"/>
-        </g>
-        <g stroke="#3E6CC4" stroke-width="3">
-          <path d="M67 10H82M67 30H82M67 50H82M103 10H118M103 30H118M103 50H118"/>
-        </g>
+    <div class="board-card reveal">
+      <svg class="board-svg" id="board" viewBox="0 0 600 380" role="group" aria-label="Beispiel-Board. Tippe ein Teil an, um es herauszunehmen.">
+        <rect x="10" y="10" width="580" height="360" rx="22" fill="#1A1E24"/>
+        <rect x="10" y="10" width="580" height="360" rx="22" fill="none" stroke="#2A3038" stroke-width="2"/>
+        <!-- pockets (below) and items (above), pairs share data-id -->
+        <g id="pockets"></g>
+        <g id="items"></g>
+        <text x="572" y="352" text-anchor="end" font-family="Archivo,system-ui,sans-serif" font-weight="700" font-size="15" fill="#3A4049" letter-spacing=".04em">SCHREIBTISCH · OBEN</text>
       </svg>
-      <p>Ein Werkzeug einmal erfassen, beliebig oft verwenden.<span>Kontur, Dicken und Griffmulden liegen in der Datenbank. Jedes neue Board greift darauf zu, statt neu zu zeichnen.</span></p>
-    </div>
-  </div>
-</section>
-
-<!-- 4. FÜR WEN =========================================================== -->
-<!-- HYPOTHESE (03): Diese Rollen will die Seite testen. Mit 03 abgleichen. -->
-<section id="fuer-wen" aria-labelledby="fuer-wen-title">
-  <div class="wrap section">
-    <div class="section-head">
-      <h2 id="fuer-wen-title">Für wen</h2>
-      <p>Produzierender Mittelstand in Ostwestfalen-Lippe, der Shadow Boards selbst herstellt oder herstellen lässt.</p>
-    </div>
-
-    <ul class="cards">
-      <li class="card">
-        <span class="role-tag">Betriebsmittelbau</span>
-        <h3>Sie fräsen die Boards</h3>
-        <p>Werkzeuge einmal erfassen statt bei jedem Auftrag neu zu zeichnen. Aus der Werkzeug-Datenbank wird das nächste Board zusammengestellt.</p>
-      </li>
-      <li class="card">
-        <span class="role-tag">Instandhaltung und Werkstattleitung</span>
-        <h3>Sie brauchen die Boards</h3>
-        <p>Jedes Werkzeug hat einen festen Platz, fehlende fallen sofort auf. Später sollen Werkzeuge vor Ort per Handy auf dem Messbogen fotografiert werden, statt sie in die Werkstatt zu bringen.</p>
-      </li>
-      <li class="card">
-        <span class="role-tag">Lean und 5S</span>
-        <h3>Sie setzen den Standard</h3>
-        <p>Ein Ablauf für alle Boards im Betrieb, mit denselben Werkzeugdefinitionen. Nicht jede Abteilung erfindet ihren eigenen Weg.</p>
-      </li>
-    </ul>
-    <p class="aside-note">Sie erkennen sich nicht wieder, stellen aber Shadow Boards her? Schreiben Sie uns trotzdem. Genau das wollen wir herausfinden.</p>
-  </div>
-</section>
-
-<!-- 5. ENTWICKLUNGSSTAND ================================================= -->
-<!-- Quelle: project-status.md, roadmap.md (Stand 2026-09-26, Version 0.3.95). -->
-<section id="stand" aria-labelledby="stand-title">
-  <div class="wrap section">
-    <div class="section-head">
-      <h2 id="stand-title">Ehrlicher Entwicklungsstand</h2>
-      <p>Was schon läuft, was gerade geprüft wird und was noch kommt. Aussagen zur Messgenauigkeit machen wir erst, wenn das Messprotokoll vorliegt.</p>
-    </div>
-
-    <div class="status">
-      <div class="st-done">
-        <h3><span class="marker" aria-hidden="true"></span>Funktioniert schon</h3>
-        <ul>
-          <li><strong>Kontur aus dem Foto</strong>Messbogen, Entzerrung, Konturerkennung und Bildimport sind in der Software gebaut.</li>
-          <li><strong>Werkzeug-Editor</strong>Konturen bearbeiten, Dicken je Fläche, Griffmulden. Abgeschlossen und abgenommen.</li>
-          <li><strong>Werkzeug-Datenbank</strong>Wiederverwendbare Werkzeuge, Austausch zwischen Rechnern per Werkzeug-Datei.</li>
-          <li><strong>Board-Editor</strong>Anordnen, prüfen, beschriften, Vorlagen, DXF-Export mit Layer je Tiefe.</li>
-        </ul>
-      </div>
-      <div class="st-proof">
-        <h3><span class="marker" aria-hidden="true"></span>Wird gerade nachgewiesen</h3>
-        <ul>
-          <li><strong>Probefräsen</strong>Die exportierte DXF wird in der Frässoftware geöffnet und mit mindestens <span class="mono">10</span> Werkzeugen gefräst.</li>
-          <li><strong>Capture Station</strong>Kamera, Leuchtfläche und Gehäuse sind im Bau. Die Software dafür ist weitgehend fertig.</li>
-          <li><strong>Messprotokoll</strong>Mit der Station wird an Prüfteilen gemessen, wie genau die Aufnahmen sind.</li>
-        </ul>
-      </div>
-      <div class="st-next">
-        <h3><span class="marker" aria-hidden="true"></span>Kommt 2027 und danach</h3>
-        <ul>
-          <li><strong>Praxistest in Pilotbetrieben</strong>Ab <span class="mono">Sommer 2027</span>, mit Ihren Werkzeugen.</li>
-          <li><strong>Fotos mit dem Handy</strong>Aufnahme vor Ort und teilautomatische Tiefenerfassung. Ohne festen Termin.</li>
-          <li><strong>Eigene Fräsbahnen</strong>Fräsbahnen und G-Code direkt aus der Software. Ohne festen Termin.</li>
-        </ul>
-      </div>
-    </div>
-    <p class="status-meta">Stand 26.09.2026, Version 0.3.95</p>
-  </div>
-</section>
-
-<!-- 6. PILOTPROGRAMM ===================================================== -->
-<section id="pilot" aria-labelledby="pilot-title">
-  <div class="wrap section">
-    <div class="section-head">
-      <h2 id="pilot-title">Pilotprogramm ab Sommer 2027</h2>
-      <p>Fremde Werkzeuge sind glänzend, dunkel, groß oder ölig. Daran muss die Software robuster werden als am eigenen Bestand. Dafür suchen wir Betriebe, die sie mit ihren Werkzeugen einsetzen.</p>
-    </div>
-
-    <div class="two-col">
-      <div class="pilot-box">
-        <h3>Was Pilotbetriebe bekommen</h3>
-        <div class="placeholder"><span class="ph-tag">Platzhalter (08)</span>Leistungen für Pilotbetriebe aus 08 eintragen.</div>
-      </div>
-      <div class="pilot-box">
-        <h3>Was wir von Ihnen erwarten</h3>
-        <div class="placeholder"><span class="ph-tag">Platzhalter (08)</span>Erwartungen an Pilotbetriebe aus 08 eintragen.</div>
-      </div>
-    </div>
-
-    <ul class="pilot-terms">
-      <li>Unverbindlich, Ihre Meldung ist keine Bestellung</li>
-      <li>Für Betriebe in Ostwestfalen-Lippe</li>
-      <li>Start <span class="mono">Sommer 2027</span></li>
-    </ul>
-  </div>
-</section>
-
-<!-- 7. GRÜNDER =========================================================== -->
-<!-- ENTWURF nach der Kurzbeschreibung von 07. Freigabe durch den Gründer nötig. Kein Firmenname. -->
-<section id="gruender" aria-labelledby="gruender-title">
-  <div class="wrap section">
-    <div class="section-head">
-      <h2 id="gruender-title">Wer dahintersteht</h2>
-    </div>
-    <div class="founder">
-      <figure class="photo-slot">
-        <!-- Foto hier einsetzen: <img src="assets/gruender.jpg" alt="Simon [Nachname], Gründer von ShadowBoard Studio" width="480" height="600"> -->
-        <figcaption>Foto folgt</figcaption>
-      </figure>
-      <div>
-        <blockquote>
-          <p>Während meiner Bachelorarbeit in der Industrie habe ich gesehen, wie Shadow Boards entstehen: Foto, Nachzeichnen, Kontrolle, Frässoftware, Fräsen. Für jede Matte von vorn.</p>
-          <p>Ich habe das Problem danach privat gelöst. Daraus ist ShadowBoard Studio entstanden. Jetzt will ich wissen, ob die Lösung auch in anderen Betrieben trägt.</p>
-        </blockquote>
-        <p class="sig">Simon [Nachname], Gründer</p>
+      <div class="board-bar">
+        <div class="status" id="status" aria-live="polite"><i></i><span>Alles an seinem Platz</span></div>
+        <button class="mini" id="reset" type="button" hidden>Alles zurücklegen</button>
+        <span class="hint" id="hint">Tipp ein Teil an und nimm es raus.</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 8. FAQ =============================================================== -->
-<section id="faq" aria-labelledby="faq-title">
-  <div class="wrap section">
-    <div class="section-head">
-      <h2 id="faq-title">Häufige Fragen</h2>
+<!-- ================= So geht's ================= -->
+<section id="so-gehts" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">So geht's</div>
+      <h2>Fünf Schritte. Kein Programm, kein Zeichnen.</h2>
+      <p>Du brauchst einen Drucker, dein Handy und die Sachen, die einen Platz bekommen sollen. <b>Schritt 1 bis 4 sind kostenlos</b> – bezahlt wird erst, wenn du dein Board bestellst.</p>
     </div>
-    <div class="faq">
-      <details>
-        <summary>Welche Fräse und welche Frässoftware brauche ich?</summary>
-        <div class="answer">
-          <p>ShadowBoard Studio exportiert DXF mit einem Layer je Tiefe. Geprüft wird das gerade mit Estlcam. Die Fräse selbst steuern Sie weiter mit Ihrer eigenen Software, eine eigene Maschinensteuerung gibt es nicht.</p>
-          <p class="open-q">Ob Ihre Fräse und Software die Dateien so übernehmen: Klären wir im Gespräch.</p>
+    <div class="flow">
+      <ol class="steps" id="steps">
+        <li class="free"><button class="step" type="button" data-step="1">
+          <span class="ico"><svg viewBox="0 0 32 32"><path d="M9 12V4h14v8"/><rect x="4" y="12" width="24" height="11" rx="2.5"/><path d="M9 19h14v9H9z"/></svg></span>
+          <span class="txt"><b>Vorlage drucken <i class="tag">kostenlos</i></b><span>Ein Blatt mit Markierungen an den Ecken. Daran erkennen wir Größe und Blickwinkel deines Fotos.</span></span>
+        </button></li>
+        <li class="free"><button class="step" type="button" data-step="2">
+          <span class="ico"><svg viewBox="0 0 32 32"><rect x="9" y="3" width="14" height="26" rx="3"/><circle cx="16" cy="13" r="4"/><path d="M14 25h4"/></svg></span>
+          <span class="txt"><b>Drauflegen, Foto <i class="tag">kostenlos</i></b><span>Ein Teil aufs Blatt, von oben fotografieren. Dann das nächste – eins nach dem anderen.</span></span>
+        </button></li>
+        <li class="free"><button class="step" type="button" data-step="3">
+          <span class="ico"><svg viewBox="0 0 32 32"><path d="M3 21 21 3l8 8-18 18z"/><path d="M8 16l3 3M12 12l2 2M15 9l3 3M19 5l2 2"/></svg></span>
+          <span class="txt"><b>Außenmaß kontrollieren <i class="tag">kostenlos</i> <i class="tag opt">optional</i></b><span>Größe und Form liest die Seite aus dem Blatt. Für absolute Sicherheit misst du ein Außenmaß nach – empfohlen, aber kein Muss. Dazu, wie hoch das Teil ist, damit die Tasche tief genug wird.</span></span>
+        </button></li>
+        <li class="free"><button class="step" type="button" data-step="4">
+          <span class="ico"><svg viewBox="0 0 32 32"><rect x="3" y="5" width="26" height="18" rx="2.5"/><path d="M11 28h10M16 23v5"/><path d="M14 10l6 6-3 .5-1.5 3z"/></svg></span>
+          <span class="txt"><b>Im Browser anordnen <i class="tag">kostenlos</i></b><span>Schieben, drehen, beschriften – am Rechner oder am Handy. Nichts zu installieren.</span></span>
+        </button></li>
+        <li><button class="step" type="button" data-step="5">
+          <span class="ico"><svg viewBox="0 0 32 32"><path d="M4 10l12-6 12 6v12l-12 6-12-6z"/><path d="M4 10l12 6 12-6M16 16v12"/></svg></span>
+          <span class="txt"><b>Bestellen <i class="tag pay">erst hier zahlst du</i></b><span>Gefällt dir dein Board, bestellst du es. Wir fertigen es und schicken es dir.</span></span>
+        </button></li>
+      </ol>
+
+      <div class="stage-card reveal">
+        <svg class="stage" id="stage" data-step="1" viewBox="0 0 600 360" aria-hidden="true">
+          <rect width="600" height="360" fill="#12151A"/>
+          <!-- board (step 4/5) -->
+          <g class="st-board">
+            <rect x="60" y="46" width="480" height="268" rx="20" fill="#1A1E24"/>
+            <g transform="translate(330 78) scale(.9)"><use href="#s-mouse" class="pocket"/><use href="#s-mouse" fill="#E8E4DC" class="st-fill"/></g>
+            <g transform="translate(428 74)"><use href="#s-batt" class="pocket"/><use href="#s-batt" fill="#3A3F47" class="st-fill"/></g>
+            <g transform="translate(468 74)"><use href="#s-batt" class="pocket"/></g>
+            <g transform="translate(350 206) scale(.82)"><use href="#s-coil" class="pocket"/><use href="#s-coil" fill="#5F6B78" class="st-fill"/><circle cx="46" cy="46" r="22" fill="#1A1E24" class="st-fill"/></g>
+            <g transform="translate(456 222)"><use href="#s-sd" class="pocket"/><use href="#s-sd" fill="#4D5BCE" class="st-fill"/></g>
+            <text x="84" y="294" font-family="Archivo,system-ui,sans-serif" font-weight="700" font-size="14" fill="#3A4049" letter-spacing=".05em">GAMING · REGAL 2</text>
+          </g>
+          <!-- printed sheet with corner markers -->
+          <g class="st-sheet">
+            <rect x="150" y="70" width="300" height="212" rx="3" fill="#1A1E24" stroke="#2A3038"/>
+            <g fill="#F2F0EB">
+              <rect x="160" y="80" width="18" height="18"/><rect x="422" y="80" width="18" height="18"/>
+              <rect x="160" y="254" width="18" height="18"/><rect x="422" y="254" width="18" height="18"/>
+            </g>
+            <g fill="#FFFFFF"><rect x="165" y="85" width="6" height="6"/><rect x="429" y="86" width="5" height="7"/><rect x="166" y="260" width="7" height="5"/><rect x="427" y="259" width="7" height="7"/></g>
+          </g>
+          <!-- printer (step 1) -->
+          <g class="st-printer">
+            <rect x="170" y="8" width="260" height="58" rx="12" fill="#3A4049"/>
+            <rect x="186" y="54" width="228" height="10" rx="3" fill="#F2F0EB"/>
+            <circle cx="404" cy="26" r="4" fill="#3DDC84"/>
+          </g>
+          <!-- the controller: object, traced contour, pocket -->
+          <g class="st-ctrl">
+            <g transform="translate(214 120) scale(.9)">
+              <use href="#s-ctrl" class="pocket st-pocket"/>
+              <g class="st-obj"><use href="#s-ctrl" fill="#3B4A5C"/><circle cx="48" cy="52" r="13" fill="#2B3644"/><circle cx="132" cy="44" r="5" fill="#FF5C1A"/><circle cx="146" cy="58" r="5" fill="#E9B949"/><circle cx="118" cy="58" r="5" fill="#2EC4B6"/></g>
+              <path class="st-contour" id="st-contour" pathLength="1000" fill="none" stroke="#FF5C1A" stroke-width="4" stroke-linejoin="round"/>
+            </g>
+          </g>
+          <!-- measuring (step 3) -->
+          <g class="st-measure" font-family="Archivo,system-ui,sans-serif" font-weight="700">
+            <path d="M218 246H385M218 238v16M385 238v16" stroke="#1F252B" stroke-width="2"/>
+            <rect x="262" y="232" width="78" height="28" rx="8" fill="#F2F0EB"/>
+            <text x="301" y="252" text-anchor="middle" font-size="15" fill="#FFFFFF" id="st-len">0 mm</text>
+            <text x="301" y="277" text-anchor="middle" font-size="10.5" fill="#6B7380" letter-spacing=".06em">AUSSENMASS · OPTIONAL</text>
+            <rect x="466" y="132" width="104" height="58" rx="12" fill="#181C22" stroke="#2A3038"/>
+            <text x="518" y="154" text-anchor="middle" font-size="12" fill="#6B7380">HÖHE</text>
+            <text x="518" y="178" text-anchor="middle" font-size="19" fill="#F2F0EB" id="st-h">0 mm</text>
+          </g>
+          <!-- phone frame and flash (step 2) -->
+          <g class="st-phone">
+            <rect x="120" y="22" width="360" height="318" rx="34" fill="none" stroke="#1F252B" stroke-width="10"/>
+            <rect x="270" y="30" width="60" height="10" rx="5" fill="#F2F0EB"/>
+            <rect class="st-flash" x="125" y="27" width="350" height="308" rx="30" fill="#FFFFFF"/>
+          </g>
+          <!-- ordered (step 5) -->
+          <g class="st-done" font-family="Archivo,system-ui,sans-serif" font-weight="700">
+            <rect x="180" y="144" width="240" height="64" rx="32" fill="#0A0C0F" opacity=".4"/><rect x="180" y="140" width="240" height="64" rx="32" fill="#181C22" stroke="#2A3038"/>
+            <circle cx="216" cy="172" r="16" fill="#3DDC84"/><path d="M208 172l6 6 11-12" stroke="#0B0D10" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="244" y="168" font-size="17" fill="#F2F0EB">Bestellt</text>
+            <text x="244" y="188" font-size="13" font-weight="500" fill="#6B7380">wird gefertigt und verschickt</text>
+          </g>
+        </svg>
+        <div class="stage-bar">
+          <div class="dots" id="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <button class="mini" id="play" type="button">▶ Abspielen</button>
         </div>
-      </details>
-      <details>
-        <summary>Welche Materialien gehen?</summary>
-        <div class="answer">
-          <p>Gedacht ist die Software für Platten etwa aus Hartschaum, Kunststoff oder Holz. Bisher arbeiten wir mit Schaumstoff. Die Tiefen sind je Fläche gestuft, Freiform-Taschen in 3D gibt es nicht.</p>
-          <p class="open-q">Ihr Material: Klären wir im Gespräch.</p>
-        </div>
-      </details>
-      <details>
-        <summary>Was, wenn ich keine Fräse habe?</summary>
-        <div class="answer">
-          <p>Wir prüfen, ob wir Boards nach Ihren Daten auch selbst fräsen und liefern. Entschieden ist das noch nicht.</p>
-          <p class="open-q">Klären wir im Gespräch.</p>
-        </div>
-      </details>
-      <details>
-        <summary>Brauche ich die Capture Station?</summary>
-        <div class="answer">
-          <p>Nein. Die Software nimmt auch Fotos an, die auf dem gedruckten Messbogen gemacht wurden. Die Capture Station ist eine Aufnahmekammer, die das Fotografieren einheitlich machen soll. Sie ist im Bau.</p>
-          <p class="open-q">Ob sie gekauft oder gemietet wird: Klären wir im Gespräch.</p>
-        </div>
-      </details>
-      <details>
-        <summary>Wann geht es los?</summary>
-        <div class="answer">
-          <p>Das Pilotprogramm startet im <span class="mono">Sommer 2027</span>. Bis dahin laufen Probefräsen, Bau der Capture Station und Messprotokoll.</p>
-        </div>
-      </details>
-      <details>
-        <summary>Was passiert mit meinen Daten?</summary>
-        <div class="answer">
-          <p>Die Software läuft lokal auf Ihrem Rechner, ohne Cloud und ohne Server. Werkzeuge und Boards liegen in einer lokalen Datenbank in offenen Formaten.</p>
-          <p>Das Formular auf dieser Seite wird von Tally bereitgestellt und erst geladen, wenn Sie es anklicken. Diese Seite setzt keine Cookies und kein Tracking ein.</p>
-        </div>
-      </details>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 9. FORMULAR ========================================================== -->
-<section id="formular" aria-labelledby="formular-title">
-  <div class="wrap section">
-    <div class="form-wrap">
-      <div class="section-head">
-        <h2 id="formular-title">Pilotbetrieb werden</h2>
-        <p>Melden Sie sich als Pilotbetrieb, oder schildern Sie nur kurz, wie Sie Shadow Boards heute herstellen. Beides hilft uns. Die Meldung ist unverbindlich.</p>
+<!-- ================= Probier's aus ================= -->
+<section id="probieren">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Probier's aus</div>
+      <h2>Ordne dein Board an.</h2>
+      <p>Zieh die Teile herum, dreh sie, schreib was drauf. So fühlt sich Schritt 4 an – nur mit deinen eigenen Sachen.</p>
+    </div>
+    <div class="editor">
+      <div class="ed-canvas reveal">
+        <svg id="ed" viewBox="0 0 600 440" aria-label="Board-Editor zum Ausprobieren">
+          <rect id="ed-board" x="20" y="20" width="560" height="300" rx="22" fill="#1A1E24"/>
+          <g id="ed-pieces"></g>
+          <g id="ed-label" class="ed-label" tabindex="0" role="button" aria-label="Gravur – ziehen zum Verschieben" display="none">
+            <rect id="ed-text-box" rx="6" fill="transparent" stroke="#8A929C" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <text id="ed-text" x="0" y="0" font-family="Archivo,system-ui,sans-serif" font-weight="700" font-size="17" letter-spacing=".05em" fill="#5A626D"></text>
+          </g>
+        </svg>
+        <div class="ed-status" id="ed-status" aria-live="polite"><i></i><span>Alles passt</span></div>
       </div>
-
-      <div class="form-panel">
-        <!-- Verstecktes Feld: gewählte Headline-Variante (a/b). Wird zusätzlich als URL-Parameter "variante" an Tally übergeben. -->
-        <input type="hidden" name="variante" id="variante" value="a">
-
-        <div id="tally-slot" data-tally-id="TALLY_FORM_ID">
-          <div class="placeholder">
-            <span class="ph-tag">Platzhalter (08): Felder bitte mit 08 abgleichen</span>
-            Vorgesehen sind diese Felder:
-            <ul class="field-list">
-              <li><span>Name</span><span class="type">Text</span></li>
-              <li><span>Betrieb und Ort</span><span class="type">Text</span></li>
-              <li><span>Rolle im Betrieb</span><span class="type">Auswahl</span></li>
-              <li><span>E-Mail</span><span class="type">E-Mail</span></li>
-              <li><span>Wie stellen Sie Shadow Boards heute her?</span><span class="type">Freitext</span></li>
-              <li><span>Interesse: Pilotbetrieb oder nur Erfahrung schildern</span><span class="type">Auswahl</span></li>
-              <li><span>variante</span><span class="type">versteckt</span></li>
-            </ul>
+      <div class="ed-panel reveal">
+        <div class="ed-group">
+          <span class="ed-label">Teil</span>
+          <div class="ed-row">
+            <button class="mini" type="button" id="ed-rot" disabled>↻ Drehen</button>
+            <span class="hint" id="ed-sel">Tipp ein Teil an</span>
           </div>
-          <p class="load-row"><button type="button" class="btn" id="tally-load">Formular laden</button></p>
-          <p id="tally-missing" class="consent-note" hidden>Das Formular ist noch nicht verbunden.</p>
-          <p class="consent-note">Beim Laden wird eine Verbindung zu Tally hergestellt und Ihre Eingaben werden dort verarbeitet. Details in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
         </div>
+        <div class="ed-group">
+          <span class="ed-label">Board</span>
+          <div class="opts" id="ed-size"></div>
+        </div>
+        <div class="ed-group">
+          <span class="ed-label">Farbe</span>
+          <div class="swatches" id="ed-color"></div>
+        </div>
+        <div class="ed-group">
+          <label class="ed-label" for="ed-engrave">Gravur</label>
+          <input type="text" id="ed-engrave" maxlength="26" placeholder="z. B. Schreibtisch oben">
+        </div>
+        <div class="ed-score" id="ed-score"><span>Fit-Score</span><b>100</b></div>
+        <div class="ed-row">
+          <button class="btn btn-pop" type="button" id="ed-auto"><span class="shine"></span>Automatisch anordnen</button>
+          <button class="btn btn-ghost" type="button" id="ed-mess">Durcheinander</button>
+        </div>
+        <p class="small">Tipp: Teil antippen und ziehen. Doppeltippen oder <kbd>R</kbd> dreht, Pfeiltasten schieben. Die Gravur verschiebst du genauso.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ================= Für alles ================= -->
+<section id="fuer-alles">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Wofür</div>
+      <h2>Für alles, was du immer suchst.</h2>
+      <p>Nicht nur Werkzeug. Alles, was einen festen Platz verdient – in der Schublade, im Koffer, an der Wand.</p>
+    </div>
+    <div class="tiles" id="tiles"></div>
+    <p class="tiles-note reveal">Dein Hobby fehlt? Umso besser – erzähl's uns unten.</p>
+    <div class="chaos-demo reveal" id="chaosDemo">
+      <div>
+        <h3>Chaos → Ordnung</h3>
+        <p>Ein leerer Platz fällt sofort auf – bevor du losfährst, nicht erst am Wasser.</p>
+        <button class="btn btn-ghost" type="button" id="chaosToggle" style="margin-top:14px">Zeigen, wie's aussieht</button>
+      </div>
+      <div class="chaos-viz">
+        <div class="chaos-bar"></div><div class="chaos-bar"></div><div class="chaos-bar"></div>
+        <div class="chaos-bar"></div><div class="chaos-bar"></div><div class="chaos-bar"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Was du bekommst ================= -->
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Was du bekommst</div>
+      <h2>Ordnung, die man sieht.</h2>
+    </div>
+    <div class="gets">
+      <div class="get reveal">
+        <svg viewBox="0 0 360 200" aria-hidden="true">
+          <rect width="360" height="200" fill="#181C22"/>
+          <rect x="60" y="40" width="240" height="120" rx="16" fill="#1A1E24"/>
+          <g transform="translate(96 62) scale(.62)"><use href="#s-ctrl" class="pocket"/><use href="#s-ctrl" fill="#3B4A5C"/></g>
+          <g transform="translate(232 58) scale(.72)"><use href="#s-mouse" class="pocket"/></g>
+          <path d="M228 166h64" stroke="#7A828B" stroke-width="1.5"/><path d="M228 160v12M292 160v12" stroke="#7A828B" stroke-width="1.5"/>
+        </svg>
+        <h3>Passt genau</h3>
+        <p>Die Form kommt aus deinem Foto, nicht aus einer Schablone. Dein Kontrollmaß prüft nach, dass es stimmt.</p>
+      </div>
+      <div class="get reveal">
+        <svg viewBox="0 0 360 200" aria-hidden="true">
+          <rect width="360" height="200" fill="#181C22"/>
+          <rect x="40" y="40" width="280" height="120" rx="16" fill="#1A1E24"/>
+          <g transform="translate(70 58) scale(.78)"><use href="#s-batt" class="pocket"/><use href="#s-batt" fill="#3A3F47"/><rect x="0" y="6" width="28" height="18" rx="6" fill="#E9B949"/></g>
+          <g transform="translate(110 58) scale(.78)"><use href="#s-batt" class="pocket"/></g>
+          <g transform="translate(150 58) scale(.78)"><use href="#s-batt" class="pocket"/><use href="#s-batt" fill="#3A3F47"/><rect x="0" y="6" width="28" height="18" rx="6" fill="#E9B949"/></g>
+          <g transform="translate(200 70) scale(.9)"><use href="#s-sd" class="pocket"/><use href="#s-sd" fill="#4D5BCE"/></g>
+          <g transform="translate(250 70) scale(.9)"><use href="#s-sd" class="pocket"/><use href="#s-sd" fill="#4D5BCE"/></g>
+        </svg>
+        <h3>Sofort sehen, was fehlt</h3>
+        <p>Ein leerer Platz fällt auf – bevor du losfährst, nicht erst am Wasser oder am Set.</p>
+      </div>
+      <div class="get reveal">
+        <svg viewBox="0 0 360 200" aria-hidden="true">
+          <rect width="360" height="200" fill="#181C22"/>
+          <path d="M40 60h120v100H40z" fill="#2A3038"/><rect x="48" y="68" width="104" height="84" rx="8" fill="#1A1E24"/>
+          <rect x="190" y="30" width="130" height="140" rx="12" fill="#1A1E24"/>
+          <g transform="translate(212 50) scale(.42) rotate(0)"><use href="#s-driver" class="pocket"/><use href="#s-driver" fill="#2EC4B6"/></g>
+          <g transform="translate(246 50) scale(.42)"><use href="#s-driver" class="pocket"/><use href="#s-driver" fill="#2EC4B6"/></g>
+          <g transform="translate(276 56) scale(.46)"><use href="#s-coil" class="pocket"/><use href="#s-coil" fill="#5F6B78"/><circle cx="46" cy="46" r="20" fill="#1A1E24"/></g>
+          <g transform="translate(62 84) scale(.6)"><use href="#s-mouse" class="pocket"/><use href="#s-mouse" fill="#E8E4DC"/></g>
+          <g transform="translate(116 84) scale(.6)"><use href="#s-sd" class="pocket"/><use href="#s-sd" fill="#4D5BCE"/></g>
+        </svg>
+        <h3>Deine Größe</h3>
+        <p>Für die Schublade, den Koffer oder die Wand. Du gibst die Maße vor, wir richten das Board danach.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Mitmachen ================= -->
+<section id="mitmachen">
+  <div class="wrap join">
+    <div class="sec-head reveal">
+      <div class="kicker">Mitmachen</div>
+      <h2>Würdest du so eins wollen?</h2>
+      <p>Sag uns kurz, wofür. Wir melden uns, sobald du dein erstes Board anordnen kannst.</p>
+      <p class="honest"><b>Ehrlich gesagt:</b> Bestellen geht noch nicht. Die Technik dahinter gibt es schon für Werkstätten – jetzt wollen wir wissen, ob sie auch zuhause gebraucht wird. Deine Antwort hilft uns, das Richtige zuerst zu bauen.</p>
+    </div>
+
+    <form id="form" class="reveal" novalidate>
+      <fieldset>
+        <legend>Wofür?</legend>
+        <div class="opts" id="opt-use"></div>
+        <div class="other" id="other-wrap" hidden style="margin-top:10px">
+          <input type="text" id="other" placeholder="Wofür genau?" aria-label="Wofür genau?">
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Wo soll das Board hin?</legend>
+        <div class="opts" id="opt-where"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Wie groß ungefähr?</legend>
+        <div class="opts" id="opt-size"></div>
+        <div class="dims">
+          <input type="text" inputmode="decimal" id="dim-w" placeholder="Breite" aria-label="Breite in cm"><span>×</span>
+          <input type="text" inputmode="decimal" id="dim-h" placeholder="Tiefe" aria-label="Tiefe oder Höhe in cm"><span>cm, falls du es schon weißt</span>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Was wäre dir ein Board in der Größe wert?</legend>
+        <p class="small" id="price-hint">Wähl zuerst die Größe – ein kleines Board für die Schublade kostet weniger als ein großes für die Wand.</p>
+        <div class="opts" id="opt-price"></div>
+      </fieldset>
+      <div>
+        <label class="l" for="what">Was soll drauf? <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+        <textarea id="what" rows="3" placeholder="z. B. zwei Rollen, Zange, Köderbox, Messer"></textarea>
+      </div>
+      <div class="form-foot">
+        <p class="small">Wir speichern hier nichts. Die Nachricht geht aus deinem Mailprogramm an uns – mit deiner Adresse, damit wir antworten können.</p>
+        <button class="btn btn-pop" type="submit">Per E-Mail schicken</button>
+      </div>
+      <div class="preview" id="preview" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<!-- ================= Fragen ================= -->
+<section id="fragen" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Fragen</div>
+      <h2>Kurz gefragt.</h2>
+    </div>
+    <div class="faq reveal">
+      <details><summary>Muss ich etwas installieren?</summary><p>Nein. Alles läuft im Browser, am Rechner und am Handy.</p></details>
+      <details><summary>Brauche ich einen besonderen Drucker?</summary><p>Nein. Jeder normale Drucker reicht, A4 oder Letter. Wichtig ist nur, in Originalgröße (100 %) zu drucken.</p></details>
+      <details><summary>Muss ich nachmessen?</summary><p>Nein. Größe und Form kommen aus dem Blatt. Wer ganz sicher gehen will, misst ein Außenmaß nach und tippt es ein – das zeigt auch, ob der Drucker in Originalgröße gedruckt hat. Nur wie hoch ein Teil ist, sieht das Foto nicht; das fragen wir, damit die Tasche tief genug wird.</p></details>
+      <details><summary>Passen mehrere Teile auf ein Foto?</summary><p>Am besten fotografierst du jedes Teil einzeln – dann wird jede Form sauber. Angeordnet wird danach am Bildschirm, so oft du willst.</p></details>
+      <details><summary>Was kostet ein Board?</summary><p>Das hängt vor allem von der Größe ab: Ein kleines Board für die Schublade kostet deutlich weniger als ein großes für die Wand. Feste Preise gibt es noch nicht – sag uns oben, was es dir wert wäre.</p></details>
+      <details><summary>Wann geht's los?</summary><p>Wir bauen gerade. Wer sich meldet, erfährt es zuerst.</p></details>
+    </div>
+  </div>
+</section>
 </main>
 
-<!-- 10. FOOTER ============================================================ -->
-<footer class="site-footer">
-  <div class="wrap">
-    <p>ShadowBoard Studio</p>
-    <nav aria-label="Rechtliches">
-      <a href="impressum.html">Impressum</a>
-      <a href="datenschutz.html">Datenschutz</a>
-    </nav>
+<footer>
+  <div class="wrap foot">
+    <span class="logo"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="#1A1E24"/><rect x="7" y="7" width="8" height="18" rx="4" fill="#FF5C1A"/><rect x="18" y="7" width="8" height="18" rx="4" fill="#C9CED6"/></svg>Platzda</span>
+    <nav aria-label="Rechtliches"><a href="#" aria-disabled="true">Impressum (folgt)</a><a href="#" aria-disabled="true">Datenschutz (folgt)</a></nav>
   </div>
 </footer>
+
+<button class="sound-toggle" id="soundToggle" type="button" aria-label="Sound" title="Sound an/aus">
+  <svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg>
+</button>
+
+<script>
+"use strict";
+
+const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+if (isTouch) document.body.classList.add("touch");
+
+// Custom cursor
+const cursor = document.getElementById("cursor");
+const trails = [];
+if (!isTouch && cursor) {
+  for (let i = 0; i < 5; i++) {
+    const t = document.createElement("div");
+    t.className = "cursor-trail";
+    t.style.opacity = String(0.28 - i * 0.04);
+    document.body.appendChild(t);
+    trails.push({el: t, x: 0, y: 0});
+  }
+  let mx = 0, my = 0;
+  document.addEventListener("mousemove", (e) => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + "px";
+    cursor.style.top = my + "px";
+    const glow = document.getElementById("glow");
+    if (glow) glow.style.transform = `translate(${mx - 250}px, ${my - 250}px)`;
+  });
+  (function trailLoop() {
+    let px = mx, py = my;
+    for (const t of trails) {
+      t.x += (px - t.x) * 0.32;
+      t.y += (py - t.y) * 0.32;
+      t.el.style.left = t.x + "px";
+      t.el.style.top = t.y + "px";
+      px = t.x; py = t.y;
+    }
+    requestAnimationFrame(trailLoop);
+  })();
+  document.querySelectorAll("a,button,.tile,.step,.opt span,.sw,.ed-piece,.mini").forEach((el) => {
+    el.addEventListener("mouseenter", () => cursor.classList.add("big"));
+    el.addEventListener("mouseleave", () => { cursor.classList.remove("big"); cursor.classList.remove("grab"); });
+  });
+}
+
+// Sound
+let soundOn = false, audioCtx = null;
+function beep(freq=440, dur=0.06, type="sine", gain=0.07) {
+  if (!soundOn) return;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = type; o.frequency.value = freq; g.gain.value = gain;
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime + dur);
+  } catch(_){}
+}
+const soundBtn = document.getElementById("soundToggle");
+if (soundBtn) soundBtn.addEventListener("click", () => {
+  soundOn = !soundOn;
+  soundBtn.classList.toggle("on", soundOn);
+  if (soundOn) beep(520, 0.08, "triangle", 0.09);
+});
+
+// Scroll progress
+const scrollProg = document.getElementById("scrollProg");
+addEventListener("scroll", () => {
+  const h = document.documentElement.scrollHeight - innerHeight;
+  if (scrollProg) scrollProg.style.width = (h > 0 ? (scrollY / h) * 100 : 0) + "%";
+}, {passive: true});
+
+// Particles
+const particlesEl = document.getElementById("particles");
+if (particlesEl) {
+  for (let i = 0; i < 16; i++) {
+    const p = document.createElement("div");
+    p.className = "particle";
+    p.style.left = Math.random() * 100 + "%";
+    p.style.animationDuration = (8 + Math.random() * 12) + "s";
+    p.style.animationDelay = Math.random() * 8 + "s";
+    const s = 2 + Math.random() * 3;
+    p.style.width = p.style.height = s + "px";
+    if (Math.random() > 0.55) p.style.background = "var(--teal)";
+    particlesEl.appendChild(p);
+  }
+}
+
+// Reveal
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("in"); });
+}, {threshold: 0.1, rootMargin: "0px 0px -30px 0px"});
+document.querySelectorAll(".reveal").forEach((el) => revealObs.observe(el));
+
+// Counters
+const countObs = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const to = parseFloat(el.dataset.to);
+    const isFloat = to % 1 !== 0;
+    const start = performance.now();
+    const tick = (t) => {
+      const k = Math.min(1, (t - start) / 1300);
+      const v = to * (1 - Math.pow(1 - k, 3));
+      el.textContent = isFloat ? v.toFixed(1) : Math.round(v);
+      if (k < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    countObs.unobserve(el);
+  });
+}, {threshold: 0.5});
+document.querySelectorAll("[data-count]").forEach((el) => countObs.observe(el));
+
+// Confetti
+const confettiCanvas = document.getElementById("confetti");
+let confettiPieces = [];
+if (confettiCanvas) {
+  const ctx = confettiCanvas.getContext("2d");
+  function resizeConfetti() { confettiCanvas.width = innerWidth; confettiCanvas.height = innerHeight; }
+  resizeConfetti();
+  addEventListener("resize", resizeConfetti);
+  window.spawnConfetti = function(n=50) {
+    const colors = ["#FF5C1A","#2EC4B6","#3DDC84","#E9B949","#A8B0BC"];
+    for (let i = 0; i < n; i++) {
+      confettiPieces.push({
+        x: Math.random()*innerWidth, y: -20-Math.random()*60,
+        vx: (Math.random()-0.5)*7, vy: 2+Math.random()*5,
+        w: 4+Math.random()*7, h: 5+Math.random()*9,
+        rot: Math.random()*Math.PI, vr: (Math.random()-0.5)*0.25,
+        color: colors[Math.floor(Math.random()*colors.length)], life: 1
+      });
+    }
+  };
+  (function confettiLoop() {
+    ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+    confettiPieces = confettiPieces.filter(p => p.life > 0);
+    for (const p of confettiPieces) {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.11; p.rot += p.vr; p.life -= 0.009;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+      ctx.globalAlpha = Math.max(0,p.life); ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore();
+    }
+    requestAnimationFrame(confettiLoop);
+  })();
+} else {
+  window.spawnConfetti = function(){};
+}
+
+// Chaos demo
+setTimeout(() => {
+  const chaosDemo = document.getElementById("chaosDemo");
+  const chaosToggle = document.getElementById("chaosToggle");
+  if (chaosToggle) {
+    let ordered = false;
+    chaosToggle.addEventListener("click", () => {
+      ordered = !ordered;
+      chaosDemo.classList.toggle("ordered", ordered);
+      chaosToggle.textContent = ordered ? "Zurück zu Chaos" : "Zeigen, wie's aussieht";
+      if (ordered) { spawnConfetti(28); beep(440,0.1,"triangle",0.09); }
+      else beep(160,0.07,"sawtooth",0.05);
+    });
+  }
+}, 100);
+
+
+// Draft: contact address is still open (marketing/privat/landingpage/README.md).
+const MAIL = "[E-MAIL]";
+const SVGNS = "http://www.w3.org/2000/svg";
+
+// ---------- hero board ----------
+// Each piece: shape id, position, scale/rotation, colour and optional details drawn on the item only.
+const PIECES = [
+  {id: "ctrl", name: "Controller", shape: "s-ctrl", x: 44, y: 46, fill: "#3B4A5C",
+   extra: '<circle cx="48" cy="52" r="13" fill="#2B3644"/><circle cx="132" cy="44" r="5" fill="#FF5C1A"/><circle cx="146" cy="58" r="5" fill="#E9B949"/><circle cx="118" cy="58" r="5" fill="#2EC4B6"/><circle cx="132" cy="72" r="5" fill="#C9CED6"/>'},
+  {id: "mouse", name: "Maus", shape: "s-mouse", x: 268, y: 44, fill: "#E8E4DC",
+   extra: '<path d="M39 2V40" stroke="#BDB6AA" stroke-width="2"/><rect x="35" y="16" width="8" height="16" rx="4" fill="#BDB6AA"/>'},
+  {id: "b1", name: "Akku 1", shape: "s-batt", x: 388, y: 44, fill: "#3A3F47", extra: '<rect x="0" y="6" width="28" height="22" rx="6" fill="#E9B949"/>'},
+  {id: "b2", name: "Akku 2", shape: "s-batt", x: 428, y: 44, fill: "#3A3F47", extra: '<rect x="0" y="6" width="28" height="22" rx="6" fill="#E9B949"/>'},
+  {id: "b3", name: "Akku 3", shape: "s-batt", x: 468, y: 44, fill: "#3A3F47", extra: '<rect x="0" y="6" width="28" height="22" rx="6" fill="#E9B949"/>'},
+  {id: "drv", name: "Schraubendreher", shape: "s-driver", x: 46, y: 322, rot: -90, fill: "#2F7D78",
+   extra: '<rect x="13" y="92" width="8" height="78" fill="#B8BEC6"/><path d="M8 14V78M17 14V78M26 14V78" stroke="#25645F" stroke-width="2"/>'},
+  {id: "sd1", name: "Speicherkarte 1", shape: "s-sd", x: 270, y: 214, fill: "#4D5BCE", extra: '<rect x="8" y="30" width="24" height="16" rx="2" fill="#E8E4DC"/>'},
+  {id: "sd2", name: "Speicherkarte 2", shape: "s-sd", x: 322, y: 214, fill: "#4D5BCE", extra: '<rect x="8" y="30" width="24" height="16" rx="2" fill="#E8E4DC"/>'},
+  {id: "coil", name: "Kabel", shape: "s-coil", x: 398, y: 196, fill: "#5F6B78",
+   extra: '<circle cx="46" cy="46" r="34" fill="none" stroke="#4E5964" stroke-width="2"/><circle cx="46" cy="46" r="22" fill="#1A1E24" stroke="#14171B" stroke-width="3"/><rect x="82" y="40" width="22" height="12" rx="3" fill="#C9CED6"/>'},
+];
+
+const pocketsG = document.getElementById("pockets");
+const itemsG = document.getElementById("items");
+const statusEl = document.getElementById("status");
+const resetBtn = document.getElementById("reset");
+const hintEl = document.getElementById("hint");
+const out = new Set();
+
+function placement(p) {
+  return `translate(${p.x} ${p.y})` + (p.rot ? ` rotate(${p.rot})` : "");
+}
+
+for (const p of PIECES) {
+  const pocket = document.createElementNS(SVGNS, "g");
+  pocket.setAttribute("transform", placement(p));
+  pocket.innerHTML = `<use href="#${p.shape}" class="pocket"/>`;
+  pocket.classList.add("pocket-hit");
+  pocket.addEventListener("click", () => toggle(p.id, false));
+  pocketsG.appendChild(pocket);
+
+  const holder = document.createElementNS(SVGNS, "g");
+  holder.setAttribute("transform", placement(p));
+  const item = document.createElementNS(SVGNS, "g");
+  item.classList.add("item");
+  item.dataset.id = p.id;
+  item.setAttribute("tabindex", "0");
+  item.setAttribute("role", "button");
+  item.setAttribute("aria-label", `${p.name} herausnehmen`);
+  item.innerHTML = `<use href="#${p.shape}" fill="${p.fill}"/>${p.extra || ""}`;
+  item.addEventListener("click", () => toggle(p.id, true));
+  item.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(p.id, true); }
+  });
+  holder.appendChild(item);
+  itemsG.appendChild(holder);
+}
+
+function toggle(id, take) {
+  if (take) out.add(id); else out.delete(id);
+  const item = itemsG.querySelector(`[data-id="${id}"]`);
+  item.classList.toggle("out", out.has(id));
+  if (take) {
+    item.classList.add("flash");
+    setTimeout(() => item.classList.remove("flash"), 300);
+    beep(160 + Math.random()*90, 0.05, "square", 0.05);
+  } else {
+    beep(300, 0.04, "sine", 0.04);
+  }
+  render();
+  if (out.size === 0 && !take) {
+    spawnConfetti(35);
+    beep(440, 0.09, "triangle", 0.09);
+    setTimeout(() => beep(620, 0.1, "triangle", 0.07), 70);
+  }
+}
+
+function render() {
+  const names = PIECES.filter((p) => out.has(p.id)).map((p) => p.name);
+  const label = statusEl.querySelector("span");
+  if (names.length === 0) {
+    label.textContent = "Alles an seinem Platz";
+  } else if (names.length <= 2) {
+    label.textContent = "Fehlt: " + names.join(", ");
+  } else {
+    label.textContent = `${names.length} Teile fehlen`;
+  }
+  statusEl.classList.toggle("missing", names.length > 0);
+  resetBtn.hidden = names.length === 0;
+  hintEl.hidden = names.length > 0;
+}
+
+resetBtn.addEventListener("click", () => {
+  for (const id of [...out]) toggle(id, false);
+});
+
+// ---------- "So geht's": step list drives the animated stage ----------
+const stage = document.getElementById("stage");
+const stepBtns = [...document.querySelectorAll("#steps .step")];
+const dots = [...document.querySelectorAll("#dots i")];
+const playBtn = document.getElementById("play");
+document.getElementById("st-contour").setAttribute("d", document.getElementById("s-ctrl").getAttribute("d"));
+let step = 1, timer = null, counter = null;
+
+function countUp(el, to) {
+  const start = performance.now();
+  const tick = (t) => {
+    const k = Math.min(1, (t - start) / 900);
+    el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))) + " mm";
+    if (k < 1) counter = requestAnimationFrame(tick);
+  };
+  cancelAnimationFrame(counter);
+  el.textContent = "0 mm";
+  setTimeout(() => { counter = requestAnimationFrame(tick); }, 900);
+}
+
+function showStep(n) {
+  step = n;
+  stage.dataset.step = String(n);
+  stepBtns.forEach((b, i) => { b.classList.toggle("on", i + 1 === n); b.setAttribute("aria-current", i + 1 === n ? "step" : "false"); });
+  dots.forEach((d, i) => { d.classList.toggle("on", i < n); d.classList.toggle("pay", i === 4); });
+  if (n === 3) {
+    countUp(document.getElementById("st-len"), 168);
+    countUp(document.getElementById("st-h"), 52);
+  }
+}
+function play() {
+  stop();
+  playBtn.textContent = "Pause";
+  timer = setInterval(() => showStep(step % 5 + 1), 3600);
+}
+function stop() {
+  clearInterval(timer);
+  timer = null;
+  playBtn.textContent = "Abspielen";
+}
+stepBtns.forEach((b) => b.addEventListener("click", () => { stop(); showStep(Number(b.dataset.step)); }));
+playBtn.addEventListener("click", () => (timer ? stop() : play()));
+showStep(1);
+// start playing the first time the stage scrolls into view
+new IntersectionObserver((entries, obs) => {
+  if (entries.some((e) => e.isIntersecting)) { play(); obs.disconnect(); }
+}, {threshold: .5}).observe(stage);
+
+// ---------- "Probier's aus": small board editor ----------
+// Bounding box of each shape in its own coordinates: [x0, y0, w, h].
+const BOX = {"s-ctrl": [0, 10, 190, 110], "s-mouse": [0, 0, 78, 116], "s-batt": [0, 0, 28, 106],
+  "s-driver": [0, 0, 34, 174], "s-sd": [0, 0, 40, 56], "s-coil": [0, 0, 92, 92]};
+const ED_PIECES = [
+  {name: "Controller", shape: "s-ctrl", fill: "#3B4A5C", extra: PIECES[0].extra},
+  {name: "Maus", shape: "s-mouse", fill: "#E8E4DC", extra: PIECES[1].extra},
+  {name: "Akku", shape: "s-batt", fill: "#3A3F47", extra: PIECES[2].extra},
+  {name: "Akku", shape: "s-batt", fill: "#3A3F47", extra: PIECES[2].extra},
+  {name: "Akku", shape: "s-batt", fill: "#3A3F47", extra: PIECES[2].extra},
+  {name: "Schraubendreher", shape: "s-driver", fill: "#2F7D78", extra: PIECES[5].extra},
+  {name: "Speicherkarte", shape: "s-sd", fill: "#4D5BCE", extra: PIECES[6].extra},
+  {name: "Speicherkarte", shape: "s-sd", fill: "#4D5BCE", extra: PIECES[6].extra},
+  {name: "Kabel", shape: "s-coil", fill: "#5F6B78",
+   extra: '<circle cx="46" cy="46" r="34" fill="none" stroke="#4E5964" stroke-width="2"/><circle cx="46" cy="46" r="22" fill="#1A1E24" stroke="#14171B" stroke-width="3" class="hole"/>'},
+];
+// A deliberately untidy start: some pieces touch, so the check has something to say.
+const MESSY = [[150, 120, 0], [300, 110, 15], [395, 105, 0], [420, 120, 0], [480, 95, 0],
+  [250, 250, 90], [470, 240, 0], [505, 255, 30], [120, 245, 0]];
+const SIZES = {"Schublade": [560, 300], "Koffer": [460, 360], "Wand": [560, 400]};
+const COLORS = [["Anthrazit", "#1A1E24"], ["Nachtblau", "#1A2740"], ["Waldgrün", "#1A2E28"], ["Weinrot", "#2A1820"]];
+const GAP = 12, EDGE = 10;
+
+const ed = document.getElementById("ed");
+const edBoard = document.getElementById("ed-board");
+const edPieces = document.getElementById("ed-pieces");
+const edText = document.getElementById("ed-text");
+const labelEl = document.getElementById("ed-label");
+const label = {text: "", x: 44, y: 298, moved: false};
+const edStatus = document.getElementById("ed-status");
+const edRot = document.getElementById("ed-rot");
+const edSel = document.getElementById("ed-sel");
+let board = {x: 20, y: 20, w: 560, h: 300, color: COLORS[0][1]};
+let selected = null;
+
+const pieces = ED_PIECES.map((def, i) => {
+  const [x, y, rot] = MESSY[i];
+  const el = document.createElementNS(SVGNS, "g");
+  el.classList.add("ed-piece");
+  el.setAttribute("tabindex", "0");
+  el.setAttribute("role", "button");
+  el.setAttribute("aria-label", def.name + " – ziehen zum Verschieben, R zum Drehen");
+  el.innerHTML = `<use href="#${def.shape}" class="pk"/><use href="#${def.shape}" fill="${def.fill}"/>${def.extra || ""}`;
+  edPieces.appendChild(el);
+  const p = {...def, x, y, rot, el};
+  hookPiece(p);
+  return p;
+});
+
+function half(p) {
+  const [, , w, h] = BOX[p.shape];
+  const r = ((p.rot % 360) + 360) % 360 * Math.PI / 180;
+  const c = Math.abs(Math.cos(r)), s = Math.abs(Math.sin(r));
+  return [(w * c + h * s) / 2, (w * s + h * c) / 2];
+}
+function place(p) {
+  const [x0, y0, w, h] = BOX[p.shape];
+  p.el.style.transform = `translate(${p.x}px,${p.y}px) rotate(${p.rot}deg) translate(${-(x0 + w / 2)}px,${-(y0 + h / 2)}px)`;
+}
+function check() {
+  const bad = new Set();
+  let edge = 0, tight = 0;
+  for (const p of pieces) {
+    const [hw, hh] = half(p);
+    if (p.x - hw < board.x + EDGE || p.x + hw > board.x + board.w - EDGE ||
+        p.y - hh < board.y + EDGE || p.y + hh > board.y + board.h - EDGE) { bad.add(p); edge++; }
+  }
+  for (let i = 0; i < pieces.length; i++) {
+    for (let j = i + 1; j < pieces.length; j++) {
+      const a = pieces[i], b = pieces[j];
+      const [aw, ah] = half(a), [bw, bh] = half(b);
+      if (Math.abs(a.x - b.x) < aw + bw + GAP && Math.abs(a.y - b.y) < ah + bh + GAP) {
+        bad.add(a); bad.add(b); tight++;
+      }
+    }
+  }
+  let labelBad = false, labelHits = false;
+  if (label.text) {
+    const lb = labelBox();
+    if (lb.x < board.x + EDGE || lb.x + lb.w > board.x + board.w - EDGE ||
+        lb.y < board.y + EDGE || lb.y + lb.h > board.y + board.h - EDGE) { labelBad = true; edge++; }
+    for (const p of pieces) {
+      const [hw, hh] = half(p);
+      if (lb.x < p.x + hw + GAP && lb.x + lb.w > p.x - hw - GAP && lb.y < p.y + hh + GAP && lb.y + lb.h > p.y - hh - GAP) {
+        bad.add(p); labelBad = true; labelHits = true;
+      }
+    }
+  }
+  labelEl.classList.toggle("bad", labelBad);
+  pieces.forEach((p) => p.el.classList.toggle("bad", bad.has(p)));
+  const msg = [];
+  if (labelHits) msg.push("Gravur liegt auf einem Teil");
+  if (tight) msg.push(tight === 1 ? "2 Teile zu eng" : `${tight}× zu eng`);
+  if (edge) msg.push(edge === 1 ? "1 Teil ragt über den Rand" : `${edge} Teile ragen über den Rand`);
+  edStatus.classList.toggle("bad", msg.length > 0);
+  edStatus.querySelector("span").textContent = msg.length ? msg.join(" · ") : "Alles passt – so könnte es gefräst werden";
+  const scoreEl = document.querySelector("#ed-score b");
+  if (scoreEl) {
+    const score = Math.max(0, 100 - tight * 12 - edge * 15 - (labelHits ? 20 : 0));
+    scoreEl.textContent = score;
+    scoreEl.style.color = score >= 90 ? "var(--ok)" : score >= 60 ? "var(--pop)" : "var(--danger)";
+  }
+}
+function select(p) {
+  selected = p;
+  if (p) labelEl.classList.remove("sel");
+  pieces.forEach((q) => q.el.classList.toggle("sel", q === p));
+  edRot.disabled = !p;
+  edSel.textContent = p ? p.name : "Tipp ein Teil an";
+}
+function rotate(p) {
+  p.rot = (Math.round(p.rot / 90) * 90 + 90) % 360;
+  animateOnce(() => place(p));
+  check();
+}
+function animateOnce(fn) {
+  edPieces.querySelectorAll(".ed-piece").forEach((e) => { e.style.transition = "transform .45s cubic-bezier(.2,.8,.2,1)"; });
+  fn();
+  setTimeout(() => edPieces.querySelectorAll(".ed-piece").forEach((e) => { e.style.transition = ""; }), 480);
+}
+function svgPoint(evt) {
+  const pt = ed.createSVGPoint();
+  pt.x = evt.clientX; pt.y = evt.clientY;
+  return pt.matrixTransform(ed.getScreenCTM().inverse());
+}
+function hookPiece(p) {
+  let drag = null, lastTap = 0;
+  p.el.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    select(p);
+    edPieces.appendChild(p.el); // bring to front
+    p.el.focus({preventScroll: true});
+    const pt = svgPoint(e);
+    drag = {dx: pt.x - p.x, dy: pt.y - p.y, moved: false, id: e.pointerId};
+    p.el.setPointerCapture(e.pointerId);
+  });
+  p.el.addEventListener("pointermove", (e) => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const pt = svgPoint(e);
+    const nx = Math.max(0, Math.min(600, pt.x - drag.dx));
+    const ny = Math.max(0, Math.min(board.y + board.h + 20, pt.y - drag.dy));
+    if (Math.hypot(nx - p.x, ny - p.y) > 1) drag.moved = true;
+    p.x = nx; p.y = ny;
+    place(p);
+    check();
+  });
+  const end = () => {
+    if (!drag) return;
+    if (!drag.moved) {
+      const now = performance.now();
+      if (now - lastTap < 320) rotate(p);
+      lastTap = now;
+    }
+    drag = null;
+  };
+  p.el.addEventListener("pointerup", end);
+  p.el.addEventListener("pointercancel", end);
+  p.el.addEventListener("focus", () => select(p));
+  p.el.addEventListener("keydown", (e) => {
+    const step = e.shiftKey ? 20 : 5;
+    const moves = {ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step]};
+    if (moves[e.key]) {
+      e.preventDefault();
+      p.x += moves[e.key][0]; p.y += moves[e.key][1];
+      place(p); check();
+    } else if (e.key === "r" || e.key === "R") {
+      e.preventDefault();
+      rotate(p);
+    }
+  });
+}
+ed.addEventListener("pointerdown", (e) => {
+  if (!e.target.closest(".ed-piece")) select(null);
+  if (!e.target.closest(".ed-label")) labelEl.classList.remove("sel");
+});
+edRot.addEventListener("click", () => selected && rotate(selected));
+
+// Pack the bounding boxes in rows, tallest first (same idea as the app's "Automatisch anordnen").
+function autoArrange() {
+  pieces.forEach((p) => { p.rot = ((Math.round(p.rot / 90) * 90) % 360 + 360) % 360; });
+  const order = [...pieces].sort((a, b) => half(b)[1] - half(a)[1]);
+  let x = board.x + EDGE + 6, y = board.y + EDGE + 6, rowH = 0;
+  for (const p of order) {
+    const [hw, hh] = half(p);
+    if (x + 2 * hw > board.x + board.w - EDGE - 6) { x = board.x + EDGE + 6; y += rowH + GAP + 2; rowH = 0; }
+    p.x = x + hw; p.y = y + hh;
+    x += 2 * hw + GAP + 2;
+    rowH = Math.max(rowH, 2 * hh);
+  }
+  animateOnce(() => pieces.forEach(place));
+  check();
+}
+document.getElementById("ed-auto").addEventListener("click", () => {
+  autoArrange();
+  beep(400, 0.07, "triangle", 0.07);
+  setTimeout(() => beep(500, 0.09, "triangle", 0.05), 90);
+});
+document.getElementById("ed-mess").addEventListener("click", () => {
+  pieces.forEach((p, i) => { [p.x, p.y, p.rot] = MESSY[i]; });
+  animateOnce(() => pieces.forEach(place));
+  check();
+});
+
+function setBoard() {
+  edBoard.setAttribute("width", board.w);
+  edBoard.setAttribute("height", board.h);
+  edBoard.setAttribute("fill", board.color);
+  edPieces.querySelectorAll(".hole").forEach((h) => h.setAttribute("fill", board.color));
+  ed.setAttribute("viewBox", `0 0 600 ${board.y + board.h + 20}`);
+  if (!label.moved) { label.x = board.x + 24; label.y = board.y + board.h - 22; }
+  placeLabel();
+}
+const sizeBox = document.getElementById("ed-size");
+for (const name of Object.keys(SIZES)) {
+  const l = document.createElement("label");
+  l.className = "opt";
+  l.innerHTML = `<input type="radio" name="ed-size" value="${name}" ${name === "Schublade" ? "checked" : ""}><span>${name}</span>`;
+  sizeBox.appendChild(l);
+}
+sizeBox.addEventListener("change", (e) => {
+  [board.w, board.h] = SIZES[e.target.value];
+  setBoard();
+});
+const colorBox = document.getElementById("ed-color");
+COLORS.forEach(([name, hex], i) => {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "sw" + (i === 0 ? " on" : "");
+  b.style.background = hex;
+  b.title = name;
+  b.setAttribute("aria-label", "Farbe " + name);
+  b.addEventListener("click", () => {
+    colorBox.querySelectorAll(".sw").forEach((s) => s.classList.toggle("on", s === b));
+    board.color = hex;
+    setBoard();
+  });
+  colorBox.appendChild(b);
+});
+document.getElementById("ed-engrave").addEventListener("input", (e) => {
+  label.text = e.target.value.trim().toUpperCase();
+  edText.textContent = label.text;
+  labelEl.setAttribute("display", label.text ? "inline" : "none");
+  placeLabel();
+});
+
+// Engraving: a draggable label (x/y = start of the text baseline), kept on the board.
+function labelBox() {
+  const b = edText.getBBox();
+  return {x: label.x + b.x - 6, y: label.y + b.y - 4, w: b.width + 12, h: b.height + 8};
+}
+function placeLabel() {
+  if (label.text) {
+    const b = edText.getBBox();
+    const minX = board.x + EDGE + 6 - b.x, maxX = board.x + board.w - EDGE - 6 - b.x - b.width;
+    const minY = board.y + EDGE + 4 - b.y, maxY = board.y + board.h - EDGE - 4 - b.y - b.height;
+    label.x = Math.max(minX, Math.min(maxX, label.x));
+    label.y = Math.max(minY, Math.min(maxY, label.y));
+    const box = document.getElementById("ed-text-box");
+    box.setAttribute("x", b.x - 6); box.setAttribute("y", b.y - 4);
+    box.setAttribute("width", b.width + 12); box.setAttribute("height", b.height + 8);
+  }
+  labelEl.setAttribute("transform", `translate(${label.x} ${label.y})`);
+  check();
+}
+{
+  let drag = null;
+  labelEl.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    select(null);
+    labelEl.classList.add("sel");
+    labelEl.focus({preventScroll: true});
+    const pt = svgPoint(e);
+    drag = {dx: pt.x - label.x, dy: pt.y - label.y, id: e.pointerId};
+    labelEl.setPointerCapture(e.pointerId);
+  });
+  labelEl.addEventListener("pointermove", (e) => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const pt = svgPoint(e);
+    label.x = pt.x - drag.dx; label.y = pt.y - drag.dy; label.moved = true;
+    placeLabel();
+  });
+  const end = () => { drag = null; };
+  labelEl.addEventListener("pointerup", end);
+  labelEl.addEventListener("pointercancel", end);
+  labelEl.addEventListener("focus", () => { select(null); labelEl.classList.add("sel"); });
+  labelEl.addEventListener("keydown", (e) => {
+    const step = e.shiftKey ? 20 : 5;
+    const moves = {ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step]};
+    if (!moves[e.key]) return;
+    e.preventDefault();
+    label.x += moves[e.key][0]; label.y += moves[e.key][1]; label.moved = true;
+    placeLabel();
+  });
+}
+pieces.forEach(place);
+setBoard();
+
+// ---------- tiles and form options ----------
+const USES = [
+  ["Angeln", "Rollen, Köderboxen, Zangen, Messer"],
+  ["Schießsport", "Reinigungszeug, Werkzeug, Zubehör"],
+  ["Werkstatt", "Schraubendreher, Zangen, Bits"],
+  ["Foto & Video", "Akkus, Objektive, Karten, Mikros"],
+  ["Gaming & Technik", "Controller, Headset, Kabel, Adapter"],
+  ["Modellbau & RC", "Sender, Akkus, Werkzeug"],
+  ["3D-Druck", "Düsen, Spachtel, Zangen, Messschieber"],
+  ["Elektronik", "Lötkolben, Multimeter, Pinzetten"],
+  ["Fahrrad", "Werkzeug, Pumpe, Ersatzteile"],
+  ["Musik", "Plektren, Stimmgerät, Kabel, Kapodaster"],
+];
+const WHERE = ["Schublade", "Koffer / Kiste", "Wand", "Weiß noch nicht"];
+const SIZES_CM = [
+  ["Klein", "bis ca. 30 × 20 cm", ["bis 20 €", "20–30 €", "30–50 €", "mehr"]],
+  ["Mittel", "bis ca. 60 × 40 cm", ["bis 50 €", "50–80 €", "80–120 €", "mehr"]],
+  ["Groß", "bis ca. 120 × 60 cm", ["bis 120 €", "120–200 €", "200–300 €", "mehr"]],
+  ["Weiß noch nicht", "", ["bis 30 €", "30–80 €", "80–200 €", "mehr"]],
+];
+
+const tiles = document.getElementById("tiles");
+for (const [name, examples] of USES) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "tile";
+  b.innerHTML = `<b>${name}</b><span>${examples}</span><em>Das bin ich →</em>`;
+  b.addEventListener("mousemove", (e) => {
+    const r = b.getBoundingClientRect();
+    b.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100) + "%");
+    b.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100) + "%");
+  });
+  b.addEventListener("click", () => {
+    const input = document.querySelector(`#opt-use input[value="${CSS.escape(name)}"]`);
+    if (input) { input.checked = true; updateOther(); }
+    document.getElementById("mitmachen").scrollIntoView({behavior: "smooth"});
+    beep(340, 0.05, "triangle", 0.05);
+  });
+  b.classList.add("reveal");
+  if (typeof revealObs !== "undefined") revealObs.observe(b);
+  tiles.appendChild(b);
+}
+
+function options(containerId, group, values, multiple) {
+  const box = document.getElementById(containerId);
+  for (const v of values) {
+    const l = document.createElement("label");
+    l.className = "opt";
+    l.innerHTML = `<input type="${multiple ? "checkbox" : "radio"}" name="${group}" value="${v}"><span>${v}</span>`;
+    box.appendChild(l);
+  }
+}
+options("opt-use", "use", [...USES.map((u) => u[0]), "Sonstiges"], true);
+options("opt-where", "where", WHERE, false);
+const sizeOpts = document.getElementById("opt-size");
+for (const [name, dims] of SIZES_CM) {
+  const l = document.createElement("label");
+  l.className = "opt";
+  l.innerHTML = `<input type="radio" name="size" value="${name}"><span>${name}${dims ? ` <small>${dims}</small>` : ""}</span>`;
+  sizeOpts.appendChild(l);
+}
+const priceBox = document.getElementById("opt-price");
+const priceHint = document.getElementById("price-hint");
+function updatePrices() {
+  const size = document.querySelector('input[name="size"]:checked');
+  priceBox.innerHTML = "";
+  priceHint.hidden = !!size;
+  if (size) options("opt-price", "price", SIZES_CM.find((x) => x[0] === size.value)[2], false);
+}
+sizeOpts.addEventListener("change", updatePrices);
+
+const otherWrap = document.getElementById("other-wrap");
+function updateOther() {
+  otherWrap.hidden = !document.querySelector('#opt-use input[value="Sonstiges"]').checked;
+}
+document.getElementById("opt-use").addEventListener("change", updateOther);
+
+// ---------- send by mail (nothing is stored on the page) ----------
+function sizeText(name) {
+  const row = SIZES_CM.find((x) => x[0] === name);
+  const w = document.getElementById("dim-w").value.trim(), h = document.getElementById("dim-h").value.trim();
+  let text = row ? (row[1] ? `${name} (${row[1]})` : name) : "–";
+  if (w || h) text += `, Maße: ${w || "?"} × ${h || "?"} cm`;
+  return text;
+}
+document.getElementById("form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const picked = (name) => [...document.querySelectorAll(`input[name="${name}"]:checked`)].map((i) => i.value);
+  const uses = picked("use").map((u) => u === "Sonstiges" && document.getElementById("other").value.trim()
+    ? "Sonstiges: " + document.getElementById("other").value.trim() : u);
+  const body = [
+    "Hallo Platzda,",
+    "",
+    "ich hätte gern so ein Board.",
+    "",
+    "Wofür: " + (uses.join(", ") || "–"),
+    "Wohin: " + (picked("where")[0] || "–"),
+    "Größe: " + sizeText(picked("size")[0]),
+    "Wert: " + (picked("price")[0] || "–"),
+    "Was drauf soll: " + (document.getElementById("what").value.trim() || "–"),
+    "",
+    "Meldet euch, wenn es losgeht.",
+  ].join("\n");
+  const subject = "Platzda – ich will eins";
+  const preview = document.getElementById("preview");
+  if (MAIL.startsWith("[")) {
+    preview.textContent = "Entwurf: Die Kontakt-Adresse fehlt noch. So sähe die Mail aus:\n\n" + body;
+    preview.classList.add("show");
+    spawnConfetti(22);
+    beep(480, 0.1, "triangle", 0.08);
+    return;
+  }
+  preview.classList.remove("show");
+  location.href = `mailto:${MAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+});
+
+// ---------- header border on scroll ----------
+const header = document.querySelector("header");
+addEventListener("scroll", () => header.classList.toggle("scrolled", scrollY > 8), {passive: true});
+</script>
 </body>
 </html>
